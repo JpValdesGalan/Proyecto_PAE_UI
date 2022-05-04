@@ -47,6 +47,22 @@ section {
   max-width: 640px;
 }
 
+.create-comment-card {
+    justify-content: space-between;
+    max-width: 640px;
+    min-width: 480px;
+    width: 75%;
+    margin: auto;
+}
+
+.new-forum-form {
+    width: 100%;
+}
+
+.full-width-form-field {
+    width: 100%;
+}
+
 .comment-card {
   justify-content: space-between;
   max-width: 640px;

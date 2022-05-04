@@ -1,1 +1,25 @@
-<p>new-post works!</p>
+<section id="new-post">
+    <div class="post-card">
+        <mat-card>
+            <mat-card-header>
+              <div mat-card-avatar class="post-header-image" style="background-image: url({{forum.img}})"></div>
+              <mat-card-title>{{forum.title}}</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="post-form">
+                    <div><mat-form-field appearance="fill">
+                        <mat-label>Titulo</mat-label>
+                        <input matInput>
+                    </mat-form-field></div>
+                    <div><mat-form-field class="example-full-width" appearance="fill">
+                        <mat-label>Contenido</mat-label>
+                        <textarea matInput></textarea>
+                    </mat-form-field></div>
+                </form>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button routerLink="post">AGREGAR PUBLICACION</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</section>

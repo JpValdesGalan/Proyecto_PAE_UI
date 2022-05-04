@@ -1,5 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import {Comments, Forums, Posts} from "../forum/forum.component";
+import {Users} from "../forum/forum.component";
+
+export interface Posts {
+  title: string;
+  content: string;
+  img: string;
+  user: Users;
+}
+
+export interface Comments {
+  content: string;
+  user: Users;
+}
 
 @Component({
   selector: 'app-post',

@@ -1,1 +1,24 @@
-<p>new-forum works!</p>
+<section id="new-forum">
+    <div class="new-forum-card">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Crear un foro</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <form class="new-forum-form">
+                    <div><mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput>
+                    </mat-form-field></div>
+                    <div><mat-form-field class="full-width-form-field" appearance="fill">
+                        <mat-label>Descripcion</mat-label>
+                        <textarea matInput></textarea>
+                    </mat-form-field></div>
+                </form>
+            </mat-card-content>
+            <mat-card-actions>
+                <button mat-button routerLink="forum">CREAR FORO</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</section>

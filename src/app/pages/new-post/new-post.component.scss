@@ -1,0 +1,23 @@
+section {
+    font-family: 'Poppins', sans-serif;
+}
+
+.post-card {
+    justify-content: space-between;
+    max-width: 640px;
+    min-width: 480px;
+    width: 75%;
+    margin: auto;
+}
+
+.post-header-image {
+    background-size: cover;
+}
+
+.post-body-image {
+    max-width: 640px;
+}
+
+.post-form {
+
+}

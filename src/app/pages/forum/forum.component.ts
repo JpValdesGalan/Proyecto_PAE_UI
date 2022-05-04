@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Posts} from "../post/post.component";
 
 //ESTO NO SE QUEDA
-export interface Posts {
-  title: string;
-  content: string;
-  img: string;
-  user: Users;
-}
-
 export interface Users {
   username: string;
   profile_picture: string;
@@ -19,11 +13,6 @@ export interface Forums {
   title: string;
   description: string;
   img: string;
-}
-
-export interface Comments {
-  content: string;
-  user: Users;
 }
 //HASTA ACA
 
@@ -69,7 +58,7 @@ export class ForumComponent implements OnInit {
       img: "",
       user: {
         username: "usuario1",
-        profile_picture: "https://cdn-icons.flaticon.com/png/512/2202/premium/2202112.png?token=exp=1651646310~hmac=1f9b43297bdf2e2802964de6ac5f73b4",
+        profile_picture: "https://cdn.aarp.net/content/dam/aarp/health/healthy-living/2017/09/1140-3-reasons-apples-good-for-you-esp.jpg",
         role: "admin",
         role_color: "#ff0000"
       }
