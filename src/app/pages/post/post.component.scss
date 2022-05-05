@@ -2,24 +2,56 @@ section {
   font-family: 'Poppins', sans-serif;
 }
 
-.forum-card {
-  height: 200px;
-  background-color: #666666;
-  color: #fff;
+.padding {
+  height: 10px;
+}
+
+.post-card {
+  max-width: 980px;
+  min-width: 480px;
+  margin: auto;
+  padding: 0;
+}
+
+.post-header {
+  height: 75px;
+  padding: 0px 60px;
   display: flex;
   justify-content: space-between;
-  max-width: 1280px;
+  max-width: 980px;
   min-width: 480px;
-  width: 90%;
+}
+
+.post-body-image {
+  margin: auto;
+  max-width: 720px;
+  min-width: 480px;
+}
+
+.post-content {
+  padding: 20px 100px;
+}
+
+.comment-card {
+  justify-content: space-between;
+  max-width: 640px;
+  min-width: 480px;
   margin: auto;
 }
 
-.forum-image {
-  vertical-align: middle;
-  border-radius: 50%;
+.comment-header-image {
+  background-size: cover;
 }
 
-.new-post {
+h2 {
+  padding: 20px 0px;
+}
+
+.user {
+  padding: 20px 0px;
+}
+
+.comment-button {
   font-family: 'Poppins', sans-serif;
   background-color: #f24444;
   color: #fff;
@@ -29,32 +61,8 @@ section {
   min-width: 480px;
   width: 75%;
   margin: auto;
-}
-
-.post-card {
-  justify-content: space-between;
-  max-width: 640px;
-  min-width: 480px;
-  width: 75%;
-  margin: auto;
-}
-
-.post-header-image {
-  background-size: cover;
-}
-
-.post-body-image {
-  max-width: 640px;
-}
-
-.comment-card {
-  justify-content: space-between;
-  max-width: 640px;
-  min-width: 480px;
-  width: 75%;
-  margin: auto;
-}
-
-.comment-header-image {
-  background-size: cover;
+  padding: 10px;
+  font-size: 12;
+  padding: 16px 8px;
+  border: none;
 }
