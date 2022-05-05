@@ -8,14 +8,15 @@
       </div>
       <div class="forum-card-button"><button mat-button>SUBSCRIBIRSE</button></div>
     </div>
+    <div class="forum-fill-div"></div>
   </div>
 </section>
 
 <button mat-raised-button class="new-post" routerLink="new-post">CREAR POST</button>
 
 <section id="posts">
-  <div class="post-card">
-    <mat-card  *ngFor="let post of posts">
+  <div class="post-card-container">
+    <mat-card  class=""*ngFor="let post of posts">
       <mat-card-header>
         <div mat-card-avatar class="post-header-image" style="background-image: url({{post.user.profile_picture}})"></div>
         <mat-card-title>{{post.user.username}}</mat-card-title>

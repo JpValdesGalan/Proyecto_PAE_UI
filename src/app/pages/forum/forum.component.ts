@@ -65,7 +65,7 @@ export class ForumComponent implements OnInit {
     },
     {
       title: "Prueba3",
-      content: "a puro p*ndejo le gustan las peras",
+      content: "a mi no me gustan las peras",
       img: "",
       user: {
         username: "usuario1",
