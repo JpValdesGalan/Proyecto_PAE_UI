@@ -1,12 +1,16 @@
 <div class="container">
     <form (submit)="login()">
         <div>
-            <label for="username">Username: </label>
-            <input type="text" [(ngModel)]="credentials.username" name="username" placeholder="Username">
+            <mat-form-field appearance="fill">
+                <mat-label for="username">Username </mat-label>
+                <input matInput type="text" [(ngModel)]="credentials.username" name="username" placeholder="Username">
+            </mat-form-field>
         </div>
         <div>
-            <label for="password">Password: </label>
-            <input type="password" [(ngModel)]="credentials.password" name="password" placeholder="Password">
+            <mat-form-field appearance="fill">
+                <mat-label for="password">Password </mat-label>
+                <input matInput type="password" [(ngModel)]="credentials.password" name="password" placeholder="Password">
+            </mat-form-field>
         </div>
         <div>
             <button>Log in</button>

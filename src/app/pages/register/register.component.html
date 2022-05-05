@@ -1,19 +1,28 @@
 <div class="container">
-    <form>
+    <form [formGroup]="form">
         <div>
-            <label for="username">Username: </label>
-            <input type="text" name="username" placeholder="Username" formControlName="username">
+            <mat-form-field appearance="fill">
+                <mat-label for="username">Username </mat-label>
+                <input matInput type="text" name="username" placeholder="Username" formControlName="username">
+            </mat-form-field>
         </div>
         <div>
-            <label for="email">Email:</label>
-            <input type="text" name="email" placeholder="Email" formControlName="email">
+            <mat-form-field appearance="fill">
+                <mat-label for="email">Email</mat-label>
+                <input matInput type="text" name="email" placeholder="Email" formControlName="email">
+            </mat-form-field>
         </div>
         <div>
-            <label for="password">Password:</label>
-            <input type="password" name="password" placeholder="Password" formControlName="password">
+            <mat-form-field appearance="fill">
+                <mat-label for="password">Password</mat-label>
+                <input matInput type="password" name="password" placeholder="Password" formControlName="password">
+            </mat-form-field>
         </div>
         <div>
-            <input type="password" name="confirm" placeholder="Confirm your password" formControlName="confirm">
+            <mat-form-field appearance="fill">
+                <mat-label for="password">Confirm password</mat-label>
+                <input matInput type="password" name="confirm" placeholder="Confirm your password" formControlName="confirm">
+            </mat-form-field>
         </div>
         <div>
             <button>Sign up</button>

@@ -13,22 +13,21 @@ form {
     margin: 90px;
     padding: 0 25px;
     background: rgba(204, 204, 204, 0.5);
-}
-
-form div {
+    
+    div {
     margin: 25px 0;
-}
+    }
 
-form label {
+    label {
     margin: 0 0 15px 0;
     display: block;
-}
+    }
 
-form input {
+    input {
     padding: 10px 10px;
-}
+    }
 
-form button {
+    button {
     font-size: 12;
     padding: 10px 16px;
     background-color: #f24444;
@@ -36,4 +35,5 @@ form button {
     font-family: 'Poppins', sans-serif;
     color: #fff;
     text-align:center;
+    }
 }
