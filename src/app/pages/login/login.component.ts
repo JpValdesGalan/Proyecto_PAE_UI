@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.form = this.formBuilder.group({
-      correo:['', Validators.required],
+      email:['', Validators.required],
       password:['', Validators.required]
     });
    }
@@ -32,11 +32,10 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log('Datos Enviados: ', this.credentials);
     this.loginService.login(this.credentials).subscribe(response => {
       if(!response.error){
         this.authService.save(response.token);
-        this.router.navigate(['/loginSucces']);
+        this.router.navigate(['/Home']);
       } else this.error = true;
     });
   }
