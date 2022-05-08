@@ -4,7 +4,7 @@
             <h1>Welcome to the Forum</h1>
             <p>Share your opinion!</p>
             <form class="" action="">
-                <input type="text">
+                <input type="text" [(ngModel)]="searchValue" (keyup)="doSearch()" name="searchbar">
                 <button>Search</button>
             </form>
         </div>
@@ -30,13 +30,13 @@
 <section id="forum-list">
     <div class="container">
         <h2>Foros Recientes</h2>
-        <div class="forum" *ngFor="let forum of forums">
+        <div class="forum" *ngFor="let forum of filteredForums">
             <div class="leftside">
                 <h3>{{forum.title}}</h3>
                 <p>{{forum.description}}</p>
             </div>
             <div class="rightside">
-                <button class="visualizar">Ver foro</button>
+                <button class="visualizar" (click)="seeForum(forum._id)">Ver foro</button>
             </div>
         </div>
     </div>

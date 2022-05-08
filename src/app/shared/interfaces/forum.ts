@@ -1,6 +1,7 @@
 export interface Forum {
-    id?: string;
+    _id: string;
     title: string;
     description: string;
     picture: string;
+    id_author: string;
 }
