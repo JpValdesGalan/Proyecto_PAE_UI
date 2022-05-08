@@ -12,11 +12,14 @@
                 <li>
                     <a routerLink="forum">FORUMS</a>
                 </li>
-                <li>
+                <li *ngIf="!isLogged">
                     <a routerLink="register">REGISTER</a>
                 </li>
-                <li>
+                <li *ngIf="!isLogged">
                     <a routerLink="login">LOG IN</a>
+                </li>
+                <li *ngIf="isLogged">
+                    <a routerLink="">{{decodedToken.username}}</a>
                 </li>
             </ul>
         </nav>
