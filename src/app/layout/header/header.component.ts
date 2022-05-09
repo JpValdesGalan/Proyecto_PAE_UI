@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from '../../shared/services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import jwt_decode from 'jwt-decode';
 
 @Component({
@@ -10,7 +10,7 @@ import jwt_decode from 'jwt-decode';
 export class HeaderComponent implements OnInit {
 
   isLogged: boolean = false;
-  decodedToken: any  = {};
+  decodedToken: any = {};
   constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);
-    } catch(Error) {
+    } catch (Error) {
       return null;
     }
   }

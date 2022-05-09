@@ -1,4 +1,4 @@
-<!--
+
 <section id="post">
     <div class="padding"></div>
     <mat-card class="post-card">
@@ -6,9 +6,9 @@
         <mat-card-title>
           <h2>{{post.title}}</h2>
         </mat-card-title>
-        <div class="user"><b>Posted by:</b> <p>{{post.user.username}}</p></div>
+        <div class="user"><b>Posted by:</b> <p>{{postAuthor.username}}</p></div>
       </mat-card-header>
-      <img mat-card-image src="{{post.img}}" alt="Post image" class="post-body-image">
+      <!--<img mat-card-image src="{{post.img}}" alt="Post image" class="post-body-image">-->
       <mat-card-content class="post-content">
         <p>{{post.content}}</p>
       </mat-card-content>
@@ -21,15 +21,14 @@
   <div class="padding"></div>
   <div class="comment-card">
     <mat-card *ngFor="let comment of comments">
-      <mat-card-header>
-        <div mat-card-avatar class="comment-header-image" style="background-image: url({{comment.user.profile_picture}})"></div>
-        <mat-card-title>{{comment.user.username}}</mat-card-title>
-        <mat-card-subtitle style="color: {{comment.user.role_color}}">{{comment.user.role}}</mat-card-subtitle>
+      <mat-card-header (onCreate)="getCommentAuthor(comment.id_user)">
+        <div mat-card-avatar class="comment-header-image">imagen</div>
+        <mat-card-title>{{commentAuthor.username}}</mat-card-title>
+        <mat-card-subtitle  [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <p>{{comment.content}}</p>
+        <p>{{comment.message}}</p>
       </mat-card-content>
     </mat-card>
   </div>
 </section>
--->

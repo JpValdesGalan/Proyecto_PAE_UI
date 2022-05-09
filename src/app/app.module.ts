@@ -22,6 +22,8 @@ import { PostComponent } from './pages/post/post.component';
 import { NewPostComponent } from './pages/new-post/new-post.component';
 import { OnCreate } from './shared/directives/on-create.directive';
 
+import { AuthGuard } from './shared/guards/auth.guard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +37,7 @@ import { OnCreate } from './shared/directives/on-create.directive';
     NewForumComponent,
     PostComponent,
     NewPostComponent,
-    OnCreate
+    OnCreate,
   ],
   imports: [
     BrowserModule,
@@ -47,9 +49,11 @@ import { OnCreate } from './shared/directives/on-create.directive';
     MaterialModule,
     MatCardModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
