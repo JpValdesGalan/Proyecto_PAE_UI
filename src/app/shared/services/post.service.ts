@@ -16,4 +16,10 @@ export class PostService {
     const postURL = environment.BackendURL + '/posts/' + id;
     this.postObservable = this.httpClient.get(postURL);
   }
+
+  publishPost(upload: any): Observable<any>{
+    console.log(upload);
+    const postURL = environment.BackendURL + '/posts/';
+    return this.httpClient.post(postURL, upload,  {responseType: 'text'});
+  }
 }

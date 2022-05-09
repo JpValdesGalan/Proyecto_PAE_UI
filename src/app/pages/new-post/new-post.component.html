@@ -30,15 +30,15 @@
         <div class="inputr">
             <mat-form-field appearance="fill">
                 <mat-label for="image">Cargar imagen</mat-label>
-                <ngx-mat-file-input type="file" formControlName ="archivo" [multiple]="false" accept="image/jpg, image/gif" (ngModelChange)="onFileChange($event)">
+                <ngx-mat-file-input type="file" formControlName ="file" [multiple]="false" accept="image/jpg, image/gif" (ngModelChange)="onFileChange($event);">
                     <mat-icon ngxMatFileInputIcon>folder</mat-icon>
                 </ngx-mat-file-input>
               </mat-form-field>              
         </div>
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>SUBIR</button>
-      </mat-card-actions>
+      <div>
+        <button>Publicar</button>
+    </div>
     </mat-card>
   </div>
 </form>

@@ -27,7 +27,7 @@ section {
   }
   
   .forum-card-text {
-    width: 80%;
+    width: 70%;
   
     h1 {
       margin: 0px;
@@ -95,4 +95,16 @@ section {
     width: 50%;
     display: inline;
     padding-left: 23%;
+  }
+
+form{
+  button {
+    font-size: 12;
+    padding: 10px 16px;
+    background-color: #f24444;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    text-align:center;
+    }
   }
