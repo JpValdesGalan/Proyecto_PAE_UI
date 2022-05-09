@@ -37,6 +37,12 @@ export class HomeComponent implements OnInit {
                      private router: Router) {}
 
   ngOnInit(): void {
+    if (!localStorage.getItem('firstReload') || localStorage.getItem('firstReload') == 'true') {
+      localStorage.setItem('firstReload', 'false');
+      window.location.reload();
+    } else {
+      localStorage.setItem('firstReload', 'true');
+    }
     this.homeforumsService.getForums().subscribe(result => {
       this.forums = result;
       this.filteredForums = this.forums;

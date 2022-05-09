@@ -66,12 +66,14 @@ export class PostComponent implements OnInit {
       this.postAuthor = result;
     });
   }
+
   getCommentAuthor(id: string){
     this.userService.getUser(id).subscribe(result => {
       this.commentAuthor = result;
       this.getRole();
     });
   }
+  
   getRole(): void {
     this.userService.getUserInForum(this.post.id_forum, this.commentAuthor._id).subscribe(result => {
       this.roleService.getRole(result.id_role).subscribe(role => {

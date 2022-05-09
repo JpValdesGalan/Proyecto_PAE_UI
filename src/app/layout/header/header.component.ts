@@ -25,4 +25,10 @@ export class HeaderComponent implements OnInit {
       return null;
     }
   }
+
+  logout() {
+    this.authService.remove();
+    window.location.reload();
+  }
+
 }
