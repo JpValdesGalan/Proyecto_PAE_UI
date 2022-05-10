@@ -4,7 +4,8 @@ import { HomeforumsService } from '../../shared/services/homeforums.service';
 import { ForumService } from 'src/app/shared/services/forum.service';
 import { Forum } from '../../shared/interfaces/forum';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth.service';import jwt_decode from 'jwt-decode';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-home',
@@ -67,6 +68,7 @@ export class HomeComponent implements OnInit {
     });
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
     this.isLogged = this.authService.isLoggedIn();
+    
   }
 
   getDecodedAccessToken(token: string): any {
