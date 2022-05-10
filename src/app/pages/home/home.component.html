@@ -29,6 +29,11 @@
 
 <section id="forum-list">
     <div class="container">
+        <div *ngIf="isLogged">
+            <div class="padding"></div>
+            <button mat-raised-button class="new-forum" routerLink="/new-forum">CREAR FORO</button>
+            <div class="padding"></div>
+          </div>
         <h2>Foros Recientes</h2>
         <div class="forum" *ngFor="let forum of filteredForums">
             <div class="leftside">
