@@ -18,8 +18,12 @@ export class PostService {
   }
 
   publishPost(upload: any): Observable<any>{
-    console.log(upload);
+    let formData: FormData = new FormData();
+    formData.append("file", upload.file);
+    formData.append("id_author", upload.id_author);
+    formData.append("id_forum", upload.id_forum);
+    formData.append("title", upload.title);
     const postURL = environment.BackendURL + '/posts/';
-    return this.httpClient.post(postURL, upload,  {responseType: 'text'});
+    return this.httpClient.post(postURL, formData,  {responseType: 'text'});
   }
 }

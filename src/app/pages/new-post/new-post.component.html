@@ -28,12 +28,8 @@
             </mat-form-field>
         </div>
         <div class="inputr">
-            <mat-form-field appearance="fill">
                 <mat-label for="image">Cargar imagen</mat-label>
-                <ngx-mat-file-input type="file" formControlName ="file" [multiple]="false" accept="image/jpg, image/gif" (ngModelChange)="onFileChange($event);">
-                    <mat-icon ngxMatFileInputIcon>folder</mat-icon>
-                </ngx-mat-file-input>
-              </mat-form-field>              
+                <input  type="file" [multiple]="false"accept="image/jpg, image/png, image/gif"  (change)="onFileChange($event);">
         </div>
       </mat-card-content>
       <div>
