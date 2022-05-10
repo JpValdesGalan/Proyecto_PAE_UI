@@ -1,28 +1,27 @@
 <section id="content-header">
     <div class="container">
         <div class="search">
-            <h1>Welcome to the Forum</h1>
+            <h1 *ngIf="!isLogged">Welcome to the Forum</h1>
+            <h1 *ngIf="isLogged">Welcome {{decodedToken.username}}</h1>
             <p>Share your opinion!</p>
             <form class="" action="">
                 <input type="text" [(ngModel)]="searchValue" (keyup)="doSearch()" name="searchbar">
-                <button>Search</button>
+                <button mat-raised-button>Search</button>
             </form>
         </div>
         <div class="information">
-            <div>
-                <ul>
-                    <li>Registered Users</li>
-                    <li>Forums</li>
-                    <li>Topics</li>
-                    <li>Replies</li>
-                </ul>
-            </div>
-                <ul>
-                    <li>{{numberUsers}}</li>
-                    <li>{{numberForums}}</li>
-                    <li>{{numberTopics}}</li>
-                    <li>{{numberReplies}}</li>
-                </ul>
+            <ul>
+                <li>Registered Users</li>
+                <li>Forums</li>
+                <li>Topics</li>
+                <li>Replies</li>
+            </ul>
+            <ul>
+                <li>{{numberUsers}}</li>
+                <li>{{numberForums}}</li>
+                <li>{{numberTopics}}</li>
+                <li>{{numberReplies}}</li>
+            </ul>
         </div>
     </div>
 </section>
@@ -36,13 +35,12 @@
           </div>
         <h2>Foros Recientes</h2>
         <div class="forum" *ngFor="let forum of filteredForums">
-            <div class="leftside">
+            <div>
                 <h3>{{forum.title}}</h3>
                 <p>{{forum.description}}</p>
             </div>
-            <div class="rightside">
-                <button class="visualizar" (click)="seeForum(forum._id)">Ver foro</button>
-            </div>
+            <button mat-raised-button (click)="seeForum(forum._id)">Visitar foro</button>
         </div>
     </div>
+    <div class="footer"></div>
 </section>
