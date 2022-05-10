@@ -6,17 +6,15 @@
         <h1>{{forum.title}}</h1>
         <p>{{forum.description}}</p>
       </div>
-      <div class="forum-card-button"><button mat-button (click)="subscribeOrDelete(isInForum)">{{isInForum ? 'SALIR' : 'UNIRSE'}}</button></div>
+      <div class="forum-card-button"><button mat-button>SUBSCRIBIRSE</button></div>
     </div>
     <div class="forum-fill-div"></div>
   </div>
 </section>
 
-<div *ngIf="isInForum">
-  <div class="padding"></div>
-  <button mat-raised-button class="new-post" routerLink="/new-post">CREAR POST</button>
-  <div class="padding"></div>
-</div>
+<div class="padding"></div>
+<button mat-raised-button class="new-post" routerLink="/new-post">CREAR POST</button>
+<div class="padding"></div>
 
 <section id="posts">
   <div class="post-card-container">
