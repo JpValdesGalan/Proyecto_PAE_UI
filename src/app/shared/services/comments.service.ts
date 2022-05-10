@@ -17,8 +17,7 @@ export class CommentsService {
   }
 
   publishComment(upload: any): Observable <any> {
-    console.log(upload);
     const postURL = environment.BackendURL + '/comments/';
-    return this.httpClient.post(postURL, {responseType: 'text'});
+    return this.httpClient.post(postURL, upload, {responseType: 'text'});
   }
 }

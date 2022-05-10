@@ -104,7 +104,7 @@ export class PostComponent implements OnInit {
 
   publishComment() {
     if(this.form.valid){
-      this.form.value.id_author = this.decodedToken._id;
+      this.form.value.id_user = this.decodedToken._id;
       this.form.value.id_post = this.post._id;
       this.commentsService.publishComment(this.form.value).subscribe(response => {
         if(!response.error) this.router.navigate(['/home']); 
