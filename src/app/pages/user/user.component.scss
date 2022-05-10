@@ -1,0 +1,121 @@
+section {
+    font-family: 'Poppins', sans-serif;
+}
+
+.padding {
+    height:20px;
+}
+
+#header{
+    .container {
+        background-color: #293340;
+        max-width: 1280px;
+        min-width: 480px;
+        width: 90%;
+        height: 325px;
+        margin: auto;
+        color: #fff;
+    }
+
+    .user-image {
+        background-color: #fff;
+        margin: auto;
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-size: cover;
+    }
+
+    .username {
+        text-align: center;
+        margin: auto;
+        padding: 20px;
+        font-size: 20px;
+    }
+
+    .dateCreated {
+        padding-top: 10px;
+        padding-left: 60%;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 12px;
+    }
+}
+
+#content {
+    .container {
+        padding: 20px 0;
+        display: flex;
+        justify-content: space-between;
+        max-width: 1280px;
+        min-width: 480px;
+        width: 90%;
+        margin: auto;
+    }
+
+    .forum-list-container{
+        margin: 0 auto;
+        width:30%;
+    }
+
+    .post-list-container{
+        margin: 0 auto;
+        width:70%;
+    }
+
+    h2 {
+        margin: 0;
+    }
+
+    .forum-list {
+        width: 100%;
+
+        mat-card {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        button {
+            height: 50px;
+            font-size: 12;
+            padding: 0px 8px;
+            background-color: #f24444;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            text-align:center;
+        }
+    }
+
+    .post-list {
+        width: 100%;
+
+        mat-card {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        button {
+            height: 50px;
+            font-size: 12;
+            padding: 0px 8px;
+            background-color: #f24444;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            text-align:center;
+        }
+    }
+}
