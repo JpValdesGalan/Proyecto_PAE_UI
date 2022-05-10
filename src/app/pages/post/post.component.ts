@@ -10,7 +10,9 @@ import { CommentsService } from 'src/app/shared/services/comments.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-post',
@@ -54,6 +56,7 @@ export class PostComponent implements OnInit {
   comments: Comment[] = []
   created: boolean = false;
   isLogged: boolean = false;
+  postImageURL: string = '';
 
   constructor(private userService: UserService,
               private postService: PostService,
@@ -73,6 +76,7 @@ export class PostComponent implements OnInit {
     this.isLogged = this.authService.isLoggedIn();
     this.postService.postObservable.subscribe((result: Post) => {
       this.post = result;
+      this.postImageURL = environment.BackendURL + '/images/' + this.post.content;
       this.getAuthor(this.post.id_author);
       this.decodedToken = this.getDecodedAccessToken(this.authService.get());
       this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {

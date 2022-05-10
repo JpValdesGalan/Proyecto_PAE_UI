@@ -10,6 +10,7 @@ import { PostService } from 'src/app/shared/services/post.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-forum',
@@ -51,6 +52,8 @@ export class ForumComponent implements OnInit {
     createdAt: '',
   };
 
+  forumImageURL: string = '';
+
   constructor(private forumService: ForumService,
     private userService: UserService,
     private roleService: RoleService,
@@ -63,6 +66,7 @@ export class ForumComponent implements OnInit {
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
     this.forumService.forumObservable.subscribe((result: Forum) => {
       this.forum = result;
+      this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
       this.suscribeButtonToggle();
       this.forumService.getAllPosts(this.forum._id).subscribe(results => {
         this.posts = results;
