@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   apiUrl: 'https://jsonplaceholder.typicode.com/',
-  socketUrl: 'http://localhost:3000'
+  BackendURL: 'http://localhost:3000'
 };
 
 /*

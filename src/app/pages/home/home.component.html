@@ -4,7 +4,7 @@
             <h1>Welcome to the Forum</h1>
             <p>Share your opinion!</p>
             <form class="" action="">
-                <input type="text">
+                <input type="text" [(ngModel)]="searchValue" (keyup)="doSearch()" name="searchbar">
                 <button>Search</button>
             </form>
         </div>
@@ -18,10 +18,10 @@
                 </ul>
             </div>
                 <ul>
-                    <li>3,854</li>
-                    <li>5</li>
-                    <li>20</li>
-                    <li>62</li>
+                    <li>{{numberUsers}}</li>
+                    <li>{{numberForums}}</li>
+                    <li>{{numberTopics}}</li>
+                    <li>{{numberReplies}}</li>
                 </ul>
         </div>
     </div>
@@ -30,17 +30,14 @@
 <section id="forum-list">
     <div class="container">
         <h2>Foros Recientes</h2>
-        <div class="forum">
-            <h3>Nombre Foro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur numquam libero, quaerat, accusamus unde odio impedit minima suscipit magnam soluta quo ut vitae cumque doloribus ullam ex maiores! Facere, dicta?</p>
-        </div>
-        <div class="forum">
-            <h3>Nombre Foro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur numquam libero, quaerat, accusamus unde odio impedit minima suscipit magnam soluta quo ut vitae cumque doloribus ullam ex maiores! Facere, dicta?</p>
-        </div>
-        <div class="forum">
-            <h3>Nombre Foro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur numquam libero, quaerat, accusamus unde odio impedit minima suscipit magnam soluta quo ut vitae cumque doloribus ullam ex maiores! Facere, dicta?</p>
+        <div class="forum" *ngFor="let forum of filteredForums">
+            <div class="leftside">
+                <h3>{{forum.title}}</h3>
+                <p>{{forum.description}}</p>
+            </div>
+            <div class="rightside">
+                <button class="visualizar" (click)="seeForum(forum._id)">Ver foro</button>
+            </div>
         </div>
     </div>
 </section>

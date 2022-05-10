@@ -20,6 +20,9 @@ import { ForumComponent } from './pages/forum/forum.component';
 import { NewForumComponent } from './pages/new-forum/new-forum.component';
 import { PostComponent } from './pages/post/post.component';
 import { NewPostComponent } from './pages/new-post/new-post.component';
+import { OnCreate } from './shared/directives/on-create.directive';
+
+import { AuthGuard } from './shared/guards/auth.guard';
 
 @NgModule({
   declarations: [
@@ -33,7 +36,8 @@ import { NewPostComponent } from './pages/new-post/new-post.component';
     ForumComponent,
     NewForumComponent,
     PostComponent,
-    NewPostComponent
+    NewPostComponent,
+    OnCreate,
   ],
   imports: [
     BrowserModule,
@@ -45,9 +49,11 @@ import { NewPostComponent } from './pages/new-post/new-post.component';
     MaterialModule,
     MatCardModule,
     MatButtonModule,
-    CommonModule
+    CommonModule,
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

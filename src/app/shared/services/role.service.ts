@@ -6,14 +6,12 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-
-export class LoginService {
+export class RoleService {
 
   constructor(private httpClient: HttpClient) { }
 
-  login(credentials: any): Observable<any> {
-    const loginURL = environment.BackendURL + '/users/login/';
-    return this.httpClient.post(loginURL, credentials, {responseType: 'json'});
+  getRole(id: string): Observable<any> {
+    const roleURL = environment.BackendURL + '/roles/' + id;
+    return this.httpClient.get(roleURL);
   }
-  
 }

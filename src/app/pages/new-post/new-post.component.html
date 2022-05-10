@@ -1,1 +1,44 @@
-<p>new-post works!</p>
+<section id="forum-info">
+    <div class="forum-card">
+      <!-- <img src="{{forum.picture}}" alt="Forum Image" class="forum-image"> -->
+      <div class="forum-card-content">
+        <div class="forum-card-text">
+          <h1>{{forum.title}}</h1>
+          <p>{{forum.description}}</p>
+        </div>
+      </div>
+      <div class="forum-fill-div"></div>
+    </div>
+  </section>
+
+  <form [formGroup]="form" (submit)="publish()">
+  <div class="post-card-container">
+    <mat-card  class="">
+      <mat-card-header>
+        <div mat-card-avatar class="post-header-image"></div>
+        <mat-card-title>{{decodedToken.username}}</mat-card-title>
+        <mat-card-subtitle [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="imgSrc" alt="Post image" class="post-body-image">
+      <mat-card-content>
+        <div class="inputl">
+            <mat-form-field appearance="fill">
+                <mat-label for="titulo">Titulo </mat-label>
+                <input matInput type="text" name="titulo" placeholder="Titulo" formControlName="title">
+            </mat-form-field>
+        </div>
+        <div class="inputr">
+            <mat-form-field appearance="fill">
+                <mat-label for="image">Cargar imagen</mat-label>
+                <ngx-mat-file-input type="file" formControlName ="file" [multiple]="false" accept="image/jpg, image/gif" (ngModelChange)="onFileChange($event);">
+                    <mat-icon ngxMatFileInputIcon>folder</mat-icon>
+                </ngx-mat-file-input>
+              </mat-form-field>              
+        </div>
+      </mat-card-content>
+      <div>
+        <button>Publicar</button>
+    </div>
+    </mat-card>
+  </div>
+</form>

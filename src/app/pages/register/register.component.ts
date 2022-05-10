@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { SignupService } from 'src/app/shared/services/signup.service';
 
 @Component({
   selector: 'app-register',
@@ -9,8 +11,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class RegisterComponent implements OnInit {
 
   form: FormGroup;
+  created: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, private signupService: SignupService, private router: Router) {
     this.form = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -26,10 +29,10 @@ export class RegisterComponent implements OnInit {
 
   sendData() {
     if(this.form.valid) {
-      const { password, confirm } = this.form.getRawValue();
-      console.log('Enviar datos', password, confirm);
-    } else {
-      console.log('Error, faltan datos', this.form);
+      this.signupService.register(this.form.value).subscribe(response => {
+        if(!response.error) this.router.navigate(['/login']);
+        else this.created = true;
+      });
     }
   }
 

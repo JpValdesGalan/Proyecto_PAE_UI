@@ -18,10 +18,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'loginSucces', component: LoginSuccesComponent, canActivate: [AuthGuard] },
-  { path: 'forum', component: ForumComponent},
-  { path: 'new-forum', component: NewForumComponent},
+  { path: 'forum/:id', component: ForumComponent},
+  { path: 'new-forum', component: NewForumComponent, canActivate: [AuthGuard]},
   { path: 'post', component: PostComponent},
-  { path: 'new-post', component: NewPostComponent},
+  { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 

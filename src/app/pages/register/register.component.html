@@ -1,5 +1,5 @@
 <div class="container">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (submit)="sendData()">
         <div>
             <mat-form-field appearance="fill">
                 <mat-label for="username">Username </mat-label>
@@ -25,7 +25,7 @@
             </mat-form-field>
         </div>
         <div>
-            <button>Sign up</button>
+            <button type="submit" [disabled]="!form.valid">Sign up</button>
         </div>
         <div>
             Have an account? <a routerLink="/login">Log in</a>

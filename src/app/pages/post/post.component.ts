@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Comments, Forums, Posts} from "../forum/forum.component";
+import { Comment } from 'src/app/shared/interfaces/comment';
+import { User } from 'src/app/shared/interfaces/user';
+import { Post } from 'src/app/shared/interfaces/post';
+import { Role } from 'src/app/shared/interfaces/role';
+import { ForumService } from 'src/app/shared/services/forum.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { RoleService } from 'src/app/shared/services/role.service';
+import { PostService } from 'src/app/shared/services/post.service';
+import { CommentsService } from 'src/app/shared/services/comments.service';
 
 @Component({
   selector: 'app-post',
@@ -7,43 +15,70 @@ import {Comments, Forums, Posts} from "../forum/forum.component";
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
+  postAuthor: User = {
+    _id: '',
+    username: '',
+    email: '',
+    profile_picture: '',
+  };
 
-    post: Posts = {
-    title: "Post prueba",
-    content: "me gustan las manzanas",
-    img: "https://cdn.aarp.net/content/dam/aarp/health/healthy-living/2017/09/1140-3-reasons-apples-good-for-you-esp.jpg",
-    user: {
-      username: "usuario1",
-      profile_picture: "https://cdn-icons.flaticon.com/png/512/2202/premium/2202112.png?token=exp=1651646310~hmac=1f9b43297bdf2e2802964de6ac5f73b4",
-      role: "admin",
-      role_color: "#ff0000"
-    }
-  }
+  commentAuthor: User = {
+    _id: '',
+    username: '',
+    email: '',
+    profile_picture: '',
+  };
 
-  comments: Comments[] = [
-    {
-      content: "Que rico manzanas",
-      user: {
-        username: "usuario3",
-        profile_picture: "https://cdn-icons.flaticon.com/png/512/2202/premium/2202112.png?token=exp=1651646310~hmac=1f9b43297bdf2e2802964de6ac5f73b4",
-        role: "admin",
-        role_color: "#ff0000"
-      }
-    },
-    {
-      content: "Ew... las peras son mejores",
-      user: {
-        username: "usuario2",
-        profile_picture: "https://cdn-icons-png.flaticon.com/512/560/560216.png",
-        role: "user",
-        role_color: "#000000"
-      }
-    }
-  ]
+    post: Post = {
+      _id: '',
+      title: '',
+      content: '',
+      id_author: '',
+      id_forum: '',
+      createdAt: ''
+    };
 
-  constructor() { }
+    role: Role = {
+      _id: '',
+      name: '',
+      color: ''
+    };
+
+  comments: Comment[] = []
+
+  constructor(private userService: UserService,
+                     private postService: PostService,
+                     private commentsService: CommentsService,
+                     private roleService: RoleService) { }
 
   ngOnInit(): void {
+    this.postService.postObservable.subscribe((result: Post) => {
+      this.post = result;
+      this.getAuthor(this.post.id_author);
+      this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {
+        this.comments = results;
+      });
+    });
   }
 
+  getAuthor(id: string){
+    this.userService.getUser(id).subscribe(result => {
+      this.postAuthor = result;
+    });
+  }
+
+  getCommentAuthor(id: string){
+    this.userService.getUser(id).subscribe(result => {
+      this.commentAuthor = result;
+      this.getRole();
+    });
+  }
+  
+  getRole(): void {
+    this.userService.getUserInForum(this.post.id_forum, this.commentAuthor._id).subscribe(result => {
+      this.roleService.getRole(result.id_role).subscribe(role => {
+        this.role = role;
+      });
+    });
+  }
 }
