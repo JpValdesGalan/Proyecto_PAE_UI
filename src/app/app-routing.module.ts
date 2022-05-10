@@ -9,6 +9,7 @@ import { ForumComponent } from "./pages/forum/forum.component";
 import { NewForumComponent } from "./pages/new-forum/new-forum.component";
 import { PostComponent } from "./pages/post/post.component";
 import { NewPostComponent } from "./pages/new-post/new-post.component";
+import { UserComponent } from "./pages/user/user.component";
 
 import { AuthGuard } from './shared/guards/auth.guard';
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'new-forum', component: NewForumComponent, canActivate: [AuthGuard]},
   { path: 'post', component: PostComponent},
   { path: 'new-post', component: NewPostComponent, canActivate: [AuthGuard]},
+  { path: 'user', component: UserComponent, canActivate: [AuthGuard]},
   { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];
 

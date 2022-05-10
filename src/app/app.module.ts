@@ -25,6 +25,7 @@ import { environment } from 'src/environments/environment';
 
 //SSO
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
+import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 
     PostComponent,
     NewPostComponent,
     OnCreate,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

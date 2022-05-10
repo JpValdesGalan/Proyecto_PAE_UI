@@ -1,0 +1,50 @@
+<section id="header">
+    <div class="container">
+        <div class="padding"></div>
+        <div mat-card-avatar class="user-image"></div>
+        <div class="username">{{decodedToken.username}}</div>
+        <div class="dateCreated">
+            <h2>El usuario se creo el:</h2>
+            <p>{{decodedToken.createdAt}}</p>
+        </div>
+    </div>
+</section>
+
+<section id="content">
+    <div class="container">
+        <div class="forum-list-container">
+            <h2>Foros seguidos</h2>
+            <div class="forum-list" >
+                <mat-card>
+                    <mat-card-title class="title">forumTitle</mat-card-title>
+                    <mat-card-content>
+                        <button mat-raised-button (click)="seeForum('123')">Visitar foro</button>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title class="title">forumTitle</mat-card-title>
+                    <mat-card-content>
+                        <button mat-raised-button (click)="seeForum('123')">Visitar foro</button>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+        <div class="post-list-container">
+            <h2>Ultimos Posts</h2>
+            <div class="post-list" >
+                <mat-card>
+                    <mat-card-title class="title">Post Title</mat-card-title>
+                    <mat-card-content>
+                        <button mat-raised-button (click)="seeForum('123')">Visitar post</button>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card>
+                    <mat-card-title class="title">Post Title</mat-card-title>
+                    <mat-card-content>
+                        <button mat-raised-button (click)="seeForum('123')">Visitar foro</button>
+                    </mat-card-content>
+                </mat-card>
+            </div>
+        </div>
+    </div>
+</section>

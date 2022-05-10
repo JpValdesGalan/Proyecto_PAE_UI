@@ -22,7 +22,7 @@
                     <a routerLink="home">LOG OUT</a>
                 </li>
                 <li *ngIf="isLogged">
-                    <a routerLink="">{{decodedToken.username}}</a>
+                    <a routerLink="user">{{decodedToken.username}}</a>
                 </li>
             </ul>
         </nav>

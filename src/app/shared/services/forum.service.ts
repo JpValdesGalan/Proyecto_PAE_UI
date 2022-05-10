@@ -35,4 +35,5 @@ export class ForumService {
     const leaveForumURL = environment.BackendURL + '/userForums/' + id;
     return this.httpClient.delete(leaveForumURL, {responseType: 'text'});
   }
+  
 }
