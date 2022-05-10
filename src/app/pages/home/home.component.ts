@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {CountersService} from '../../shared/services/counters.service';
-import {HomeforumsService} from '../../shared/services/homeforums.service';
+import { CountersService } from '../../shared/services/counters.service';
+import { HomeforumsService } from '../../shared/services/homeforums.service';
 import { ForumService } from 'src/app/shared/services/forum.service';
-import {Forum} from '../../shared/interfaces/forum';
+import { Forum } from '../../shared/interfaces/forum';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+
+  decodedToken: any = {};
+  isLogged: boolean = false;
 
   numberForums: Number = 0;
   numberUsers: Number = 0;
@@ -32,9 +36,11 @@ export class HomeComponent implements OnInit {
   };
 
   constructor(private counterService: CountersService,
-                     private homeforumsService: HomeforumsService,
-                     private forumService: ForumService,
-                     private router: Router) {}
+              private homeforumsService: HomeforumsService,
+              private forumService: ForumService,
+              private router: Router,
+              private authService: AuthService
+              ) {}
 
   ngOnInit(): void {
     if (!localStorage.getItem('firstReload') || localStorage.getItem('firstReload') == 'true') {
@@ -59,6 +65,16 @@ export class HomeComponent implements OnInit {
     this.counterService.countUsers().subscribe(result => {
       this.numberUsers = result.count;
     });
+    this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+    this.isLogged = this.authService.isLoggedIn();
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
   }
 
   doSearch(){
@@ -81,3 +97,4 @@ export class HomeComponent implements OnInit {
     });
   }
 }
+
