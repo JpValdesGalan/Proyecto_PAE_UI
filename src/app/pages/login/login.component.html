@@ -12,9 +12,8 @@
                 <input matInput type="password" [(ngModel)]="credentials.password" name="password" placeholder="Password">
             </mat-form-field>
         </div>
-        <div class="button-wrapper">
-            <button mat-raised-button>Log in</button>
-            <button mat-raised-button (click)="googleLogin($event)">Google Login</button>
+        <div>
+            <button>Log in</button>
         </div>
         <div>
             Don't have an account? <br><a routerLink="/register">Sign up here</a>

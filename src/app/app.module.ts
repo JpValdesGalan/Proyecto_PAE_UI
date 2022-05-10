@@ -2,8 +2,10 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from "@angular/material/card";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
+import { MatButtonModule } from "@angular/material/button";
 import { CommonModule } from '@angular/common';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -20,10 +22,6 @@ import { NewPostComponent } from './pages/new-post/new-post.component';
 import { OnCreate } from './shared/directives/on-create.directive';
 
 import { AuthGuard } from './shared/guards/auth.guard';
-import { environment } from 'src/environments/environment';
-
-//SSO
-import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
@@ -49,27 +47,12 @@ import { UserComponent } from './pages/user/user.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MaterialModule,
+    MatCardModule,
+    MatButtonModule,
     CommonModule,
-    SocialLoginModule
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              environment.googleId
-            )
-          }
-        ],
-        onError: (err) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
-    }, AuthGuard
+    AuthGuard
   ],
   bootstrap: [AppComponent]
 })

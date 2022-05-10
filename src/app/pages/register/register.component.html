@@ -24,7 +24,9 @@
                 <input matInput type="password" name="confirm" placeholder="Confirm your password" formControlName="confirm">
             </mat-form-field>
         </div>
-        <button mat-raised-button type="submit" [disabled]="!form.valid">Sign up</button>
+        <div>
+            <button type="submit" [disabled]="!form.valid">Sign up</button>
+        </div>
         <div>
             Have an account? <a routerLink="/login">Log in</a>
         </div>

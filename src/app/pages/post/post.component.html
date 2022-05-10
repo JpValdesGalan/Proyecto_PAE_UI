@@ -1,3 +1,4 @@
+
 <section id="post">
     <div class="padding"></div>
     <mat-card class="post-card">
@@ -16,7 +17,9 @@
 
 <section id="comments">
   <div class="padding"></div>
-  <div class="comment-container">
+  <button mat-raised-button class="comment-button" routerLink="new-post">Comentar</button>
+  <div class="padding"></div>
+  <div class="comment-card">
     <mat-card *ngFor="let comment of comments">
       <mat-card-header (onCreate)="getCommentAuthor(comment.id_user)">
         <div mat-card-avatar class="comment-header-image">imagen</div>
@@ -27,13 +30,5 @@
         <p>{{comment.message}}</p>
       </mat-card-content>
     </mat-card>
-    <form>
-      <mat-form-field class="comment-section" appearance="fill">
-        <mat-label></mat-label>
-        <textarea matInput></textarea>
-      </mat-form-field>
-      <button mat-raised-button class="comment-button">Comentar</button>
-    </form>
   </div>
-  <div class="footer"></div>
 </section>

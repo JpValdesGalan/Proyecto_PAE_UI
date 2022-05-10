@@ -15,16 +15,5 @@ export class LoginService {
     const loginURL = environment.BackendURL + '/users/login/';
     return this.httpClient.post(loginURL, credentials, {responseType: 'json'});
   }
-
-  googleLogin(idToken: String): Observable <any> {
-    return this.httpClient.post(environment.BackendURL + '/users/login/google', {
-      idToken
-    })
-  }
-
-  /*googleLogin(idToken: string): Observable<any> {
-    const loginURL = environment.BackendURL + '/users/login/google';
-    return this.httpClient.post(loginURL, {idToken});
-  }*/
   
 }
