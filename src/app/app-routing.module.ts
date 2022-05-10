@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { HomeComponent } from './pages/home/home.component';
-import { LoginSuccesComponent } from './pages/login-succes/login-succes.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ForumComponent } from "./pages/forum/forum.component";
@@ -17,7 +16,6 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
-  { path: 'loginSucces', component: LoginSuccesComponent, canActivate: [AuthGuard] },
   { path: 'forum/:id', component: ForumComponent},
   { path: 'new-forum', component: NewForumComponent, canActivate: [AuthGuard]},
   { path: 'post', component: PostComponent},

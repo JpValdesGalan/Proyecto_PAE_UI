@@ -15,7 +15,6 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
 import { RegisterComponent } from './pages/register/register.component';
-import { LoginSuccesComponent } from './pages/login-succes/login-succes.component';
 import { ForumComponent } from './pages/forum/forum.component';
 import { NewForumComponent } from './pages/new-forum/new-forum.component';
 import { PostComponent } from './pages/post/post.component';
@@ -23,6 +22,7 @@ import { NewPostComponent } from './pages/new-post/new-post.component';
 import { OnCreate } from './shared/directives/on-create.directive';
 
 import { AuthGuard } from './shared/guards/auth.guard';
+import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
   declarations: [
@@ -32,12 +32,12 @@ import { AuthGuard } from './shared/guards/auth.guard';
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    LoginSuccesComponent,
     ForumComponent,
     NewForumComponent,
     PostComponent,
     NewPostComponent,
     OnCreate,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
