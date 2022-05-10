@@ -3,11 +3,14 @@ import { Comment } from 'src/app/shared/interfaces/comment';
 import { User } from 'src/app/shared/interfaces/user';
 import { Post } from 'src/app/shared/interfaces/post';
 import { Role } from 'src/app/shared/interfaces/role';
-import { ForumService } from 'src/app/shared/services/forum.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { RoleService } from 'src/app/shared/services/role.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { CommentsService } from 'src/app/shared/services/comments.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-post',
@@ -15,6 +18,9 @@ import { CommentsService } from 'src/app/shared/services/comments.service';
   styleUrls: ['./post.component.scss']
 })
 export class PostComponent implements OnInit {
+
+  decodedToken: any = {};
+
   postAuthor: User = {
     _id: '',
     username: '',
@@ -29,32 +35,46 @@ export class PostComponent implements OnInit {
     profile_picture: '',
   };
 
-    post: Post = {
-      _id: '',
-      title: '',
-      content: '',
-      id_author: '',
-      id_forum: '',
-      createdAt: ''
-    };
+  post: Post = {
+    _id: '',
+    title: '',
+    content: '',
+    id_author: '',
+    id_forum: '',
+    createdAt: ''
+  };
 
-    role: Role = {
-      _id: '',
-      name: '',
-      color: ''
-    };
-
+  role: Role = {
+    _id: '',
+    name: '',
+    color: ''
+  };
+  
+  form: FormGroup;
   comments: Comment[] = []
+  created: boolean = false;
+  isLogged: boolean = false;
 
   constructor(private userService: UserService,
-                     private postService: PostService,
-                     private commentsService: CommentsService,
-                     private roleService: RoleService) { }
+              private postService: PostService,
+              private authService: AuthService,
+              private commentsService: CommentsService,
+              private roleService: RoleService,
+              private formBuilder: FormBuilder,
+              private router: Router
+              ) {
+                this.form = this.formBuilder.group({
+                  message: ['', [Validators.required, Validators.maxLength(250)]]
+                });
+                this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+              }
 
   ngOnInit(): void {
+    this.isLogged = this.authService.isLoggedIn();
     this.postService.postObservable.subscribe((result: Post) => {
       this.post = result;
       this.getAuthor(this.post.id_author);
+      this.decodedToken = this.getDecodedAccessToken(this.authService.get());
       this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {
         this.comments = results;
       });
@@ -80,5 +100,24 @@ export class PostComponent implements OnInit {
         this.role = role;
       });
     });
+  }
+
+  publishComment() {
+    if(this.form.valid){
+      this.form.value.id_author = this.decodedToken._id;
+      this.form.value.id_post = this.post._id;
+      this.commentsService.publishComment(this.form.value).subscribe(response => {
+        if(!response.error) this.router.navigate(['/home']); 
+        else this.created = true;
+      });
+    }
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
   }
 }

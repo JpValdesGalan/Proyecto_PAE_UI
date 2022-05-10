@@ -15,4 +15,10 @@ export class CommentsService {
     const commentsURL = environment.BackendURL + '/comments/getAll/' + id;
     return this.httpClient.get(commentsURL);
   }
+
+  publishComment(upload: any): Observable <any> {
+    console.log(upload);
+    const postURL = environment.BackendURL + '/comments/';
+    return this.httpClient.post(postURL, {responseType: 'text'});
+  }
 }
