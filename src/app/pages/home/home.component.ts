@@ -4,7 +4,7 @@ import { HomeforumsService } from '../../shared/services/homeforums.service';
 import { ForumService } from 'src/app/shared/services/forum.service';
 import { Forum } from '../../shared/interfaces/forum';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth.service';import jwt_decode from 'jwt-decode';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit {
 
   searchTimeout: any;
   searchValue: string = '';
+  isLogged: boolean = false;
 
   selectedForum: Forum = {
     _id: '',
@@ -77,8 +78,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  doSearch(){
-    if(this.searchTimeout){
+  doSearch() {
+    if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
     this.searchTimeout = setTimeout(() => {
@@ -89,7 +90,7 @@ export class HomeComponent implements OnInit {
     }, 200);
   }
 
-  seeForum(id: string){
+  seeForum(id: string) {
     this.forumService.getForum(id);
     this.forumService.forumObservable.subscribe((result: Forum) => {
       this.selectedForum = result;
