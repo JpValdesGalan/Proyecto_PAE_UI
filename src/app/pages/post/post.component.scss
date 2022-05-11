@@ -2,75 +2,74 @@ section {
   font-family: 'Poppins', sans-serif;
 }
 
-.forum-card {
-  height: 200px;
-  background-color: #666666;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  max-width: 1280px;
-  min-width: 480px;
-  width: 90%;
-  margin: auto;
-}
-
-.forum-image {
-  vertical-align: middle;
-  border-radius: 50%;
-}
-
-.new-post {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f24444;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  max-width: 640px;
-  min-width: 480px;
-  width: 75%;
-  margin: auto;
+.padding {
+  height: 10px;
 }
 
 .post-card {
-  justify-content: space-between;
-  max-width: 640px;
+  max-width: 980px;
   min-width: 480px;
-  width: 75%;
   margin: auto;
+  padding: 0;
 }
 
-.post-header-image {
-  background-size: cover;
+.post-header {
+  height: 75px;
+  padding: 0px 60px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 980px;
+  min-width: 480px;
 }
 
 .post-body-image {
-  max-width: 640px;
+  margin: auto;
+  max-width: 720px;
+  min-width: 480px;
 }
 
-.create-comment-card {
-    justify-content: space-between;
-    max-width: 640px;
-    min-width: 480px;
-    width: 75%;
-    margin: auto;
+.post-content {
+  padding: 20px 100px;
 }
 
-.new-forum-form {
-    width: 100%;
-}
-
-.full-width-form-field {
-    width: 100%;
-}
-
-.comment-card {
+.comment-container {
   justify-content: space-between;
   max-width: 640px;
   min-width: 480px;
-  width: 75%;
   margin: auto;
 }
 
 .comment-header-image {
   background-size: cover;
+}
+
+h2 {
+  padding: 20px 0px;
+}
+
+.user {
+  padding: 20px 0px;
+}
+
+.comment-section {
+  display: inline;
+  width: 100%;
+  max-width: 640px;
+  min-width: 480px;
+}
+
+.comment-button {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f24444;
+  color: #fff;
+  justify-content: space-between;
+  margin: auto;
+  font-size: 12;
+  padding: 10px 8px;
+  border: none;
+}
+
+.footer {
+  width: 100%;
+  height: 32px;
 }

@@ -1,46 +1,46 @@
 <section id="content-header">
     <div class="container">
         <div class="search">
-            <h1>Welcome to the Forum</h1>
+            <h1 *ngIf="!isLogged">Welcome to the Forum</h1>
+            <h1 *ngIf="isLogged">Welcome {{decodedToken.username}}</h1>
             <p>Share your opinion!</p>
             <form class="" action="">
-                <input type="text">
-                <button>Search</button>
+                <input type="text" [(ngModel)]="searchValue" (keyup)="doSearch()" name="searchbar">
+                <button mat-raised-button>Search</button>
             </form>
         </div>
         <div class="information">
-            <div>
-                <ul>
-                    <li>Registered Users</li>
-                    <li>Forums</li>
-                    <li>Topics</li>
-                    <li>Replies</li>
-                </ul>
-            </div>
-                <ul>
-                    <li>3,854</li>
-                    <li>5</li>
-                    <li>20</li>
-                    <li>62</li>
-                </ul>
+            <ul>
+                <li>Registered Users</li>
+                <li>Forums</li>
+                <li>Topics</li>
+                <li>Replies</li>
+            </ul>
+            <ul>
+                <li>{{numberUsers}}</li>
+                <li>{{numberForums}}</li>
+                <li>{{numberTopics}}</li>
+                <li>{{numberReplies}}</li>
+            </ul>
         </div>
     </div>
 </section>
 
 <section id="forum-list">
     <div class="container">
+        <div *ngIf="isLogged">
+            <div class="padding"></div>
+            <button mat-raised-button class="new-forum" routerLink="/new-forum">CREAR FORO</button>
+            <div class="padding"></div>
+        </div>
         <h2>Foros Recientes</h2>
-        <div class="forum">
-            <h3>Nombre Foro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur numquam libero, quaerat, accusamus unde odio impedit minima suscipit magnam soluta quo ut vitae cumque doloribus ullam ex maiores! Facere, dicta?</p>
-        </div>
-        <div class="forum">
-            <h3>Nombre Foro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur numquam libero, quaerat, accusamus unde odio impedit minima suscipit magnam soluta quo ut vitae cumque doloribus ullam ex maiores! Facere, dicta?</p>
-        </div>
-        <div class="forum">
-            <h3>Nombre Foro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur numquam libero, quaerat, accusamus unde odio impedit minima suscipit magnam soluta quo ut vitae cumque doloribus ullam ex maiores! Facere, dicta?</p>
+        <div class="forum" *ngFor="let forum of filteredForums">
+            <div>
+                <h3>{{forum.title}}</h3>
+                <p>{{forum.description}}</p>
+            </div>
+            <button mat-raised-button (click)="seeForum(forum._id)">Visitar foro</button>
         </div>
     </div>
+    <div class="footer"></div>
 </section>

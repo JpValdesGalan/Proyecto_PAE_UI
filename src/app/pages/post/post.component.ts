@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import {Users} from "../forum/forum.component";
-
-export interface Posts {
-  title: string;
-  content: string;
-  img: string;
-  user: Users;
-}
-
-export interface Comments {
-  content: string;
-  user: Users;
-}
+import { Comment } from 'src/app/shared/interfaces/comment';
+import { User } from 'src/app/shared/interfaces/user';
+import { Post } from 'src/app/shared/interfaces/post';
+import { Role } from 'src/app/shared/interfaces/role';
+import { UserService } from 'src/app/shared/services/user.service';
+import { RoleService } from 'src/app/shared/services/role.service';
+import { PostService } from 'src/app/shared/services/post.service';
+import { CommentsService } from 'src/app/shared/services/comments.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { environment } from 'src/environments/environment';
+import jwt_decode from 'jwt-decode';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Component({
   selector: 'app-post',
@@ -20,42 +21,107 @@ export interface Comments {
 })
 export class PostComponent implements OnInit {
 
-    post: Posts = {
-    title: "Post prueba",
-    content: "me gustan las manzanas",
-    img: "https://cdn.aarp.net/content/dam/aarp/health/healthy-living/2017/09/1140-3-reasons-apples-good-for-you-esp.jpg",
-    user: {
-      username: "usuario1",
-      profile_picture: "https://cdn-icons.flaticon.com/png/512/2202/premium/2202112.png?token=exp=1651646310~hmac=1f9b43297bdf2e2802964de6ac5f73b4",
-      role: "admin",
-      role_color: "#ff0000"
-    }
-  }
+  decodedToken: any = {};
 
-  comments: Comments[] = [
-    {
-      content: "Que rico manzanas",
-      user: {
-        username: "usuario3",
-        profile_picture: "https://cdn-icons.flaticon.com/png/512/2202/premium/2202112.png?token=exp=1651646310~hmac=1f9b43297bdf2e2802964de6ac5f73b4",
-        role: "admin",
-        role_color: "#ff0000"
-      }
-    },
-    {
-      content: "Ew... las peras son mejores",
-      user: {
-        username: "usuario2",
-        profile_picture: "https://cdn-icons-png.flaticon.com/512/560/560216.png",
-        role: "user",
-        role_color: "#000000"
-      }
-    }
-  ]
+  postAuthor: User = {
+    _id: '',
+    username: '',
+    email: '',
+    profile_picture: '',
+  };
 
-  constructor() { }
+  commentAuthor: User = {
+    _id: '',
+    username: '',
+    email: '',
+    profile_picture: '',
+  };
+
+  post: Post = {
+    _id: '',
+    title: '',
+    content: '',
+    id_author: '',
+    id_forum: '',
+    createdAt: ''
+  };
+
+  role: Role = {
+    _id: '',
+    name: '',
+    color: ''
+  };
+  
+  form: FormGroup;
+  comments: Comment[] = []
+  created: boolean = false;
+  isLogged: boolean = false;
+  postImageURL: string = '';
+
+  constructor(private userService: UserService,
+              private postService: PostService,
+              private authService: AuthService,
+              private commentsService: CommentsService,
+              private roleService: RoleService,
+              private formBuilder: FormBuilder,
+              private router: Router
+              ) {
+                this.form = this.formBuilder.group({
+                  message: ['', [Validators.required, Validators.maxLength(250)]]
+                });
+                this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+              }
 
   ngOnInit(): void {
+    this.isLogged = this.authService.isLoggedIn();
+    this.postService.postObservable.subscribe((result: Post) => {
+      this.post = result;
+      this.postImageURL = environment.BackendURL + '/images/' + this.post.content;
+      this.getAuthor(this.post.id_author);
+      this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+      this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {
+        this.comments = results;
+      });
+    });
   }
 
+  getAuthor(id: string){
+    this.userService.getUser(id).subscribe(result => {
+      this.postAuthor = result;
+    });
+  }
+
+  getCommentAuthor(id: string){
+    this.userService.getUser(id).subscribe(result => {
+      this.commentAuthor = result;
+      this.getRole();
+    });
+  }
+  
+  getRole(): void {
+    this.userService.getUserInForum(this.post.id_forum, this.commentAuthor._id).subscribe(result => {
+      this.roleService.getRole(result.id_role).subscribe(role => {
+        this.role = role;
+      });
+    });
+  }
+
+  publishComment() {
+    if(this.form.valid){
+      this.form.value.id_user = this.decodedToken._id;
+      this.form.value.id_post = this.post._id;
+      this.commentsService.publishComment(this.form.value).subscribe(response => {
+        if(!response.error) this.router.navigate(['/home']); 
+        else this.created = true;
+      });
+    }
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
+  }
 }

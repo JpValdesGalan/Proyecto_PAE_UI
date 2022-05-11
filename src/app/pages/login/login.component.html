@@ -2,8 +2,8 @@
     <form (submit)="login()">
         <div>
             <mat-form-field appearance="fill">
-                <mat-label for="username">Username </mat-label>
-                <input matInput type="text" [(ngModel)]="credentials.username" name="username" placeholder="Username">
+                <mat-label for="username">Email </mat-label>
+                <input matInput type="text" [(ngModel)]="credentials.email" name="email" placeholder="Email">
             </mat-form-field>
         </div>
         <div>
@@ -12,8 +12,9 @@
                 <input matInput type="password" [(ngModel)]="credentials.password" name="password" placeholder="Password">
             </mat-form-field>
         </div>
-        <div>
-            <button>Log in</button>
+        <div class="button-wrapper">
+            <button mat-raised-button>Log in</button>
+            <button mat-raised-button (click)="googleLogin($event)">Google Login</button>
         </div>
         <div>
             Don't have an account? <br><a routerLink="/register">Sign up here</a>

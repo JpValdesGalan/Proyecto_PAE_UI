@@ -1,22 +1,30 @@
 <div>
-    <p routerLink="home">FORUM</p>
-    <nav>
-        <ul>
-            <li>
-                <a routerLink="home">HOME</a>
-            </li>
-            <li>
-                <a routerLink="post">FEATURES</a>
-            </li>
-            <li>
-                <a routerLink="forum">FORUMS</a>
-            </li>
-            <li>
-                <a routerLink="register">REGISTER</a>
-            </li>
-            <li>
-                <a routerLink="login">LOG IN</a>
-            </li>
-        </ul>
-    </nav>
+    <div class="container">
+        <p routerLink="home">FORUM</p>
+        <nav>
+            <ul>
+                <li>
+                    <a routerLink="home">HOME</a>
+                </li>
+                <li>
+                    <a routerLink="">FEATURES</a>
+                </li>
+                <li>
+                    <a routerLink="forum">FORUMS</a>
+                </li>
+                <li *ngIf="!isLogged">
+                    <a routerLink="register">REGISTER</a>
+                </li>
+                <li *ngIf="!isLogged">
+                    <a routerLink="login">LOG IN</a>
+                </li>
+                <li *ngIf="isLogged" (click)="logout()">
+                    <a routerLink="home">LOG OUT</a>
+                </li>
+                <li *ngIf="isLogged">
+                    <a routerLink="user">{{decodedToken.username}}</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </div>

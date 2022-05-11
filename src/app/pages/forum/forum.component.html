@@ -1,34 +1,41 @@
 <section id="forum-info">
   <div class="forum-card">
-    <img src="{{forum.img}}" alt="Forum Image" class="forum-image">
+    <img src="{{forumImageURL}}" alt="Forum Image" class="forum-image">
     <div class="forum-card-content">
       <div class="forum-card-text">
         <h1>{{forum.title}}</h1>
         <p>{{forum.description}}</p>
       </div>
-      <div class="forum-card-button"><button mat-button>SUBSCRIBIRSE</button></div>
+      <div class="forum-card-button"><button mat-button (click)="subscribeOrDelete(isInForum)">{{isInForum ? 'SALIR' : 'UNIRSE'}}</button></div>
     </div>
+    <div class="forum-fill-div"></div>
   </div>
 </section>
 
-<button mat-raised-button class="new-post" routerLink="new-post">CREAR POST</button>
+<div *ngIf="isInForum">
+  <div class="padding"></div>
+  <button mat-raised-button class="new-post" routerLink="/new-post">CREAR POST</button>
+  <div class="padding"></div>
+</div>
 
 <section id="posts">
-  <div class="post-card">
-    <mat-card  *ngFor="let post of posts">
+  <div class="post-card-container">
+    <mat-card  class="" *ngFor="let post of posts">
+      <div *ngIf="post" (onCreate)="getUser(post.id_author)"></div>
       <mat-card-header>
-        <div mat-card-avatar class="post-header-image" style="background-image: url({{post.user.profile_picture}})"></div>
-        <mat-card-title>{{post.user.username}}</mat-card-title>
-        <mat-card-subtitle style="color: {{post.user.role_color}}">{{post.user.role}}</mat-card-subtitle>
+        <div mat-card-avatar class="post-header-image"></div>
+        <mat-card-title>{{author.username}}</mat-card-title>
+        <mat-card-subtitle [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="{{post.img}}" alt="Post image" class="post-body-image">
+      <!-- <img mat-card-image src="{{post.content}}" alt="Post image" class="post-body-image"> -->
       <mat-card-content>
         <h3>{{post.title}}</h3>
         <p>{{post.content}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button routerLink="post">COMENTAR</button>
+        <button mat-button (click)="seePost(post._id)">VER</button>
       </mat-card-actions>
     </mat-card>
   </div>
+  <div class="footer"></div>
 </section>

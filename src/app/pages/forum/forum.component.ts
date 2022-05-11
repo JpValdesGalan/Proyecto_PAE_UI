@@ -1,20 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import {Posts} from "../post/post.component";
-
-//ESTO NO SE QUEDA
-export interface Users {
-  username: string;
-  profile_picture: string;
-  role: string;
-  role_color: string;
-}
-
-export interface Forums {
-  title: string;
-  description: string;
-  img: string;
-}
-//HASTA ACA
+import { Forum } from 'src/app/shared/interfaces/forum';
+import { User } from 'src/app/shared/interfaces/user';
+import { Post } from 'src/app/shared/interfaces/post';
+import { Role } from 'src/app/shared/interfaces/role';
+import { ForumService } from 'src/app/shared/services/forum.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { RoleService } from 'src/app/shared/services/role.service';
+import { PostService } from 'src/app/shared/services/post.service';
+import { AuthService } from 'src/app/shared/services/auth.service';
+import { Router } from '@angular/router';
+import jwt_decode from 'jwt-decode';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-forum',
@@ -22,53 +18,117 @@ export interface Forums {
   styleUrls: ['./forum.component.scss']
 })
 export class ForumComponent implements OnInit {
-  //CAMBIAR ESTO
-  forum: Forums = {
-    title: "NombreForo",
-    description: "Aqui va la descripcion del foro. Este es un foro de prueba.",
-    img: "https://cdn-icons-png.flaticon.com/512/2312/2312493.png"
+  author: User = {
+    _id: '',
+    username: '',
+    email: '',
+    profile_picture: '',
+  };
+
+  forum: Forum = {
+    _id: '',
+    title: '',
+    description: '',
+    picture: '',
+    id_author: ''
+  };
+  
+  role: Role = {
+    _id: '',
+    name: '',
+    color: ''
+  };
+
+  posts: Post[] = [];
+  isInForum: boolean = false;
+  decodedToken: any = {};
+
+  selectedPost: Post = {
+    _id: '',
+    title: '',
+    content: '',
+    id_author: '',
+    id_forum: '',
+    createdAt: '',
+  };
+
+  forumImageURL: string = '';
+
+  constructor(private forumService: ForumService,
+    private userService: UserService,
+    private roleService: RoleService,
+    private postService: PostService,
+    private router: Router,
+    private authService: AuthService) {
   }
-
-  posts: Posts[] = [
-    {
-      title: "Post prueba",
-      content: "me gustan las manzanas",
-      img: "https://cdn.aarp.net/content/dam/aarp/health/healthy-living/2017/09/1140-3-reasons-apples-good-for-you-esp.jpg",
-      user: {
-        username: "usuario1",
-        profile_picture: "https://cdn-icons.flaticon.com/png/512/2202/premium/2202112.png?token=exp=1651646310~hmac=1f9b43297bdf2e2802964de6ac5f73b4",
-        role: "admin",
-        role_color: "#ff0000"
-      }
-    },
-    {
-      title: "Prueba2",
-      content: "Las peras son mejores!",
-      img: "https://farmaciaribera.es/blog/wp-content/uploads/2020/01/Beneficios-de-comer-peras-1024x680.jpg",
-      user: {
-        username: "usuario2",
-        profile_picture: "https://cdn-icons-png.flaticon.com/512/560/560216.png",
-        role: "user",
-        role_color: "#000000"
-      }
-    },
-    {
-      title: "Prueba3",
-      content: "a puro p*ndejo le gustan las peras",
-      img: "",
-      user: {
-        username: "usuario1",
-        profile_picture: "https://cdn.aarp.net/content/dam/aarp/health/healthy-living/2017/09/1140-3-reasons-apples-good-for-you-esp.jpg",
-        role: "admin",
-        role_color: "#ff0000"
-      }
-    },
-  ]
-  //HASTA ACA
-
-  constructor() { }
 
   ngOnInit(): void {
+    this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+    this.forumService.forumObservable.subscribe((result: Forum) => {
+      this.forum = result;
+      this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
+      this.suscribeButtonToggle();
+      this.forumService.getAllPosts(this.forum._id).subscribe(results => {
+        this.posts = results;
+      });
+    });
   }
 
+  getUser(id: string): void {
+    this.userService.getUser(id).subscribe(result => {
+      this.author = result;
+      this.getRole();
+    });
+  }
+
+  getRole(): void {
+    this.userService.getUserInForum(this.forum._id, this.author._id).subscribe(result => {
+      this.roleService.getRole(result.id_role).subscribe(role => {
+        this.role = role;
+      });
+    });
+  }
+
+  seePost(id: string): void{
+    this.postService.getPost(id);
+    this.postService.postObservable.subscribe((result: Post) => {
+      this.selectedPost = result;
+      this.router.navigate(['/post']);
+    });
+  }
+
+  suscribeButtonToggle(): void{
+    if(!this.authService.isLoggedIn) this.isInForum = false;
+    else{
+      this.userService.getUserInForum(this.forum._id, this.decodedToken._id).subscribe(result => {
+        if(result) this.isInForum = true;
+        else this.isInForum = false;
+      });
+    }
+  }
+
+  getDecodedAccessToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
+  }
+
+  subscribeOrDelete(action: boolean){
+    if(!this.authService.isLoggedIn()) this.router.navigate(['/login']);
+    else{
+      if(action){
+        this.userService.getUserInForum(this.forum._id, this.decodedToken._id).subscribe(response => {
+          this.forumService.leaveForum(response._id).subscribe(res => {
+            if(res) this.isInForum = !this.isInForum;
+          });
+        });
+      } else {
+        this.forumService.joinForum(this.decodedToken._id, this.forum._id).subscribe(response => {
+          if(response) this.isInForum = !this.isInForum;
+        });
+      }
+    }
+  }
 }

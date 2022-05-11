@@ -1,25 +1,40 @@
-<section id="new-post">
-    <div class="post-card">
-        <mat-card>
-            <mat-card-header>
-              <div mat-card-avatar class="post-header-image" style="background-image: url({{forum.img}})"></div>
-              <mat-card-title>{{forum.title}}</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <form class="post-form">
-                    <div><mat-form-field appearance="fill">
-                        <mat-label>Titulo</mat-label>
-                        <input matInput>
-                    </mat-form-field></div>
-                    <div><mat-form-field class="example-full-width" appearance="fill">
-                        <mat-label>Contenido</mat-label>
-                        <textarea matInput></textarea>
-                    </mat-form-field></div>
-                </form>
-            </mat-card-content>
-            <mat-card-actions>
-                <button mat-button routerLink="post">AGREGAR PUBLICACION</button>
-            </mat-card-actions>
-        </mat-card>
+<section id="forum-info">
+    <div class="forum-card">
+      <!-- <img src="{{forum.picture}}" alt="Forum Image" class="forum-image"> -->
+      <div class="forum-card-content">
+        <div class="forum-card-text">
+          <h1>{{forum.title}}</h1>
+          <p>{{forum.description}}</p>
+        </div>
+      </div>
+      <div class="forum-fill-div"></div>
     </div>
-</section>
+  </section>
+
+  <form [formGroup]="form" (submit)="publish()">
+  <div class="post-card-container">
+    <mat-card  class="">
+      <mat-card-header>
+        <div mat-card-avatar class="post-header-image"></div>
+        <mat-card-title>{{decodedToken.username}}</mat-card-title>
+        <mat-card-subtitle [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image [src]="imgSrc" alt="Post image" class="post-body-image">
+      <mat-card-content>
+        <div class="inputl">
+            <mat-form-field appearance="fill">
+                <mat-label for="titulo">Titulo </mat-label>
+                <input matInput type="text" name="titulo" placeholder="Titulo" formControlName="title">
+            </mat-form-field>
+        </div>
+        <div class="inputr">
+                <mat-label for="image">Cargar imagen</mat-label>
+                <input  type="file" [multiple]="false"accept="image/jpg, image/png, image/gif"  (change)="onFileChange($event);">
+        </div>
+      </mat-card-content>
+      <div>
+        <button>Publicar</button>
+      </div>
+    </mat-card>
+  </div>
+</form>
