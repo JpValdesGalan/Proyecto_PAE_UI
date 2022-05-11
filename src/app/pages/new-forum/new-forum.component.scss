@@ -18,6 +18,17 @@ section {
     width: 100%;
 }
 
+.forum-body-image {
+  max-width: 640px;
+  max-height: 720px;
+}
+
+.inputr{
+  width: 50%;
+  display: inline;
+  padding-left: 23%;
+}
+
 form{
   button {
     font-size: 12px;

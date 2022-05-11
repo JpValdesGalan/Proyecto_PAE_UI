@@ -33,7 +33,8 @@ export class NewForumComponent implements OnInit {
   decodedToken: any = {};
   form: FormGroup;
   created: boolean = false;
-  imgSrc: string = 'https://www.agora-gallery.com/advice/wp-content/uploads/2015/10/image-placeholder-300x200.png';
+  sendFile: any;
+  imgSrc: string;
 
   constructor(
     private forumService: ForumService,
@@ -48,6 +49,7 @@ export class NewForumComponent implements OnInit {
       title: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(30)]],
       description: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
     });
+    this.imgSrc = 'https://www.agora-gallery.com/advice/wp-content/uploads/2015/10/image-placeholder-300x200.png';
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
   }
 
@@ -58,22 +60,30 @@ export class NewForumComponent implements OnInit {
   }
 
   create() {
-    console.log("create");
     if(this.form.valid) {
       this.form.value.id_author = this.currentUser._id;
-      this.form.value.archivo = this.imgSrc;
-      console.log(this.form)
+      this.form.value.archivo = this.sendFile;
       this.forumService.createForum(this.form.value).subscribe(result => {
         if (!result.error) {
           this.created = true;
           this.router.navigate(['/forum/' + result._id]);
-          console.log("created");
         }
         else {
           console.log(result.error);
-          console.log("not created");
         }
       });
+    }
+  }
+
+  onFileChange(event: any) {
+    let file = event.target.files[0];
+    const reader = new FileReader();
+    if (file) {
+      this.sendFile = file;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgSrc = reader.result as string;
+      };
     }
   }
 
