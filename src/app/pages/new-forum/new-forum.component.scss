@@ -1,0 +1,42 @@
+section {
+    font-family: 'Poppins', sans-serif;
+}
+
+.new-forum-card {
+    justify-content: space-between;
+    max-width: 640px;
+    min-width: 480px;
+    width: 75%;
+    margin: auto;
+}
+
+.new-forum-form {
+    width: 100%;
+}
+
+.full-width-form-field {
+    width: 100%;
+}
+
+.forum-body-image {
+  max-width: 640px;
+  max-height: 720px;
+}
+
+.inputr{
+  width: 50%;
+  display: inline;
+  padding-left: 23%;
+}
+
+form{
+  button {
+    font-size: 12px;
+    padding: 10px 16px;
+    background-color: #f24444;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    text-align:center;
+  }
+}

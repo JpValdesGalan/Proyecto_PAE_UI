@@ -1,1 +1,29 @@
-<p>new-forum works!</p>
+<section id="new-forum">
+    <form [formGroup]="form" (submit)="create()">
+    <div class="new-forum-card">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Crear un foro</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <div><mat-form-field appearance="fill">
+                    <mat-label for="nombre">Nombre</mat-label>
+                    <input matInput type="text" name="nombre" formControlName="title">
+                </mat-form-field></div>
+                <div><mat-form-field class="full-width-form-field" appearance="fill">
+                    <mat-label for="descripcion">Descripcion</mat-label>
+                    <textarea matInput type="text" name="descripcion" formControlName="description"></textarea>
+                </mat-form-field></div>
+              <div class="inputr">
+                <img mat-card-image [src]="imgSrc" alt="Post image" class="forum-body-image">
+                <mat-label for="file">Imagen de foro</mat-label>
+                <input  name="file" type="file" [multiple]="false" accept="image/jpg, image/png"  (change)="onFileChange($event);">
+              </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <button>Crear Foro</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+    </form>
+</section>
