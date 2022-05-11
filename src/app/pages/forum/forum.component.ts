@@ -53,6 +53,7 @@ export class ForumComponent implements OnInit {
   };
 
   forumImageURL: string = '';
+  postImageURL: string = '';
 
   constructor(private forumService: ForumService,
     private userService: UserService,
@@ -63,6 +64,7 @@ export class ForumComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.postImageURL = environment.BackendURL;
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
     this.forumService.forumObservable.subscribe((result: Forum) => {
       this.forum = result;
