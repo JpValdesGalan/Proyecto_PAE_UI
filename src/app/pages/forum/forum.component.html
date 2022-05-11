@@ -1,4 +1,4 @@
-<section id="forum-info">
+<section id="header">
   <div class="forum-card">
     <img src="{{forumImageURL}}" alt="Forum Image" class="forum-image">
     <div class="forum-card-content">
@@ -18,24 +18,25 @@
   <div class="padding"></div>
 </div>
 
-<section id="posts">
-  <div class="post-card-container">
-    <mat-card  class="" *ngFor="let post of posts">
-      <div *ngIf="post" (onCreate)="getUser(post.id_author)"></div>
+<section id="content">
+  <div class="container">
+    <div class="post" *ngFor="let post of posts">
+      <mat-card>
+        <div *ngIf="post" (onCreate)="getUser(post.id_author)"></div>
       <mat-card-header>
         <div mat-card-avatar class="post-header-image"></div>
         <mat-card-title>{{author.username}}</mat-card-title>
         <mat-card-subtitle [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
       </mat-card-header>
-      <!-- <img mat-card-image src="{{post.content}}" alt="Post image" class="post-body-image"> -->
+      <img mat-card-image src="{{postImageURL}}/images/{{post.content}}" alt="Post image" class="post-body-image">
       <mat-card-content>
         <h3>{{post.title}}</h3>
-        <p>{{post.content}}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button (click)="seePost(post._id)">VER</button>
+        <button class="postButton" mat-button (click)="seePost(post._id)">VER</button>
       </mat-card-actions>
-    </mat-card>
+      </mat-card>
+    </div>
   </div>
   <div class="footer"></div>
 </section>
