@@ -82,7 +82,7 @@ section {
 
 .post-body-image {
   max-width: 640px;
-  max-height: 720px;
+  max-height: 600px;
 }
 
 .footer {
@@ -101,4 +101,11 @@ section {
   font-family: 'Poppins', sans-serif;
   color: #fff;
   text-align:center;
+}
+.post-header-image {
+  background-color: #fff;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-size: cover;
 }

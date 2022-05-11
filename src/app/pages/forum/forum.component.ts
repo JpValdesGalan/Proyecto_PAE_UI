@@ -18,12 +18,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./forum.component.scss']
 })
 export class ForumComponent implements OnInit {
-  author: User = {
-    _id: '',
-    username: '',
-    email: '',
-    profile_picture: '',
-  };
 
   forum: Forum = {
     _id: '',
@@ -32,14 +26,10 @@ export class ForumComponent implements OnInit {
     picture: '',
     id_author: ''
   };
-  
-  role: Role = {
-    _id: '',
-    name: '',
-    color: ''
-  };
 
   posts: Post[] = [];
+  authors: User[] = [];
+  roles: Role[] = [];
   isInForum: boolean = false;
   decodedToken: any = {};
 
@@ -54,6 +44,7 @@ export class ForumComponent implements OnInit {
 
   forumImageURL: string = '';
   postImageURL: string = '';
+  authorImageURL: string = '';
 
   constructor(private forumService: ForumService,
     private userService: UserService,
@@ -72,23 +63,23 @@ export class ForumComponent implements OnInit {
       this.suscribeButtonToggle();
       this.forumService.getAllPosts(this.forum._id).subscribe(results => {
         this.posts = results;
+        for(let i = 0; i < this.posts.length; i++){
+          this.userService.getUser(this.posts[i].id_author).subscribe(author => {
+            this.authors[i] = author;
+            this.userService.getUserInForum(this.forum._id, this.authors[i]._id).subscribe( userForum => {
+              this.roleService.getRole(userForum.id_role).subscribe(role => {
+                this.roles[i] = role;
+              });
+            });
+          });
+        }
       });
     });
   }
 
-  getUser(id: string): void {
-    this.userService.getUser(id).subscribe(result => {
-      this.author = result;
-      this.getRole();
-    });
-  }
-
-  getRole(): void {
-    this.userService.getUserInForum(this.forum._id, this.author._id).subscribe(result => {
-      this.roleService.getRole(result.id_role).subscribe(role => {
-        this.role = role;
-      });
-    });
+  updateImages(index: number){
+    this.authorImageURL = environment.BackendURL + '/images/' + this.authors[index].profile_picture;
+    this.postImageURL = environment.BackendURL + '/images/' + this.posts[index].content;
   }
 
   seePost(id: string): void{
