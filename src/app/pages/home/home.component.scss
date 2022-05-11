@@ -2,7 +2,7 @@ section {
     font-family: 'Poppins', sans-serif;
 }
 
-#content-header {
+#header {
     .container {
         background-color: #293340;
         display: flex;
@@ -22,6 +22,24 @@ section {
     form {
     margin: 0;
     padding: 0;
+    }
+
+    .information {
+        margin: 50px;
+        display: flex;
+        justify-content: space-between;
+        background-color: #666;
+        min-width: 220px;
+        width: 25%;
+    }
+    
+    ul {
+    padding: 10px;
+    list-style-type: none;
+    }
+
+    li {
+    padding: 10px 0;
     }
 }
 
@@ -58,59 +76,42 @@ h1 {
     font-size: 36px;
 }
 
-#content-header {
-    .information {
-        margin: 50px;
-        display: flex;
-        justify-content: space-between;
-        background-color: #666;
-        min-width: 220px;
-        width: 25%;
-    }
-    
-    ul {
-    padding: 10px;
-    list-style-type: none;
-    }
-
-    li {
-    padding: 10px 0;
-    }
-}
-
-#forum-list {
+#content {
     .container {
-    max-width: 1280px;
-    min-width: 480px;
-    width: 90%;
-    margin: auto;
+        max-width: 1280px;
+        min-width: 480px;
+        width: 90%;
+        margin: auto;
     }
 
     h2 {
-    margin: 20px 0;
-    padding: 20px 20px;
+        margin: 0;
     }
 
     .forum {
-    margin: 25px 20px;
-    padding: 0 20px;
-    border: 1px solid #666;
-    }
-}
+        width: 100%;
+        padding: 10px 0;
 
-.forum {
-    display: flex;
-    justify-content: space-between;
-
-    button {
-        height: 50px;
-        font-size: 12;
-        padding: 0px 16px;
-        background-color: #f24444;
-        font-family: 'Poppins', sans-serif;
-        color: #fff;
-        text-align:center;
+        mat-card-content {
+            display: flex;
+            justify-content: space-between;
         }
+
+        .title {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        button {
+            height: 50px;
+            font-size: 12;
+            padding: 0px 16px;
+            background-color: #f24444;
+            font-family: 'Poppins', sans-serif;
+            color: #fff;
+            text-align:center;
+        }
+    }
 }
 
 .footer {
@@ -132,8 +133,9 @@ h1 {
     font-size: 12;
     padding: 16px 8px;
     border: none;
-  }
+    text-align: center;
+}
 
-  .padding {
+.padding {
     height: 10px;
-  }
+}
