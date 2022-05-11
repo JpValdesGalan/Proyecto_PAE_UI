@@ -35,5 +35,16 @@ export class ForumService {
     const leaveForumURL = environment.BackendURL + '/userForums/' + id;
     return this.httpClient.delete(leaveForumURL, {responseType: 'text'});
   }
-  
+
+  createForum(upload: any): Observable<any>{
+    let formData: FormData = new FormData();
+    formData.append("title", upload.title);
+    formData.append("description", upload.description);
+    formData.append("archivo", upload.archivo);
+    formData.append("id_author", upload.id_author);
+    console.log(formData);
+    const forumURL = environment.BackendURL + '/forums/';
+    return this.httpClient.post(forumURL, formData,  {responseType: 'text'});
+  }
+
 }

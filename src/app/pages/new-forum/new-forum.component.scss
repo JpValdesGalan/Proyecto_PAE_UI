@@ -17,3 +17,15 @@ section {
 .full-width-form-field {
     width: 100%;
 }
+
+form{
+  button {
+    font-size: 12px;
+    padding: 10px 16px;
+    background-color: #f24444;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    text-align:center;
+  }
+}
