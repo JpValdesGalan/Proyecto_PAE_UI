@@ -26,6 +26,11 @@ export class PostService {
     return this.httpClient.post(postURL, formData,  {responseType: 'text'});
   }
 
+  deletePost(id: string): Observable<any>{
+    const postURL = environment.BackendURL + '/posts/' + id;
+    return this.httpClient.delete(postURL);
+  }
+
   getUserPosts(id: string): Observable <any> {
     const myPostURL = environment.BackendURL + '/posts/user/' + id;
     return this.httpClient.get(myPostURL);

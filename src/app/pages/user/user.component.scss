@@ -79,6 +79,9 @@ section {
     .post-list-container{
         margin: 0 auto;
         width:70%;
+        button{
+            margin-left: 5px;
+        }
     }
 
     h2 {
@@ -151,7 +154,7 @@ form {
     margin: 90px;
     padding: 0 25px;
     background: rgba(204, 204, 204, 0.5);
-    
+
     div {
     margin: 25px 0;
     }

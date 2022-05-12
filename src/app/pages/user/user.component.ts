@@ -149,6 +149,12 @@ export class UserComponent implements OnInit {
     this.router.navigate(['/post', id]);
   }
 
+  deletePost(id: string){
+    this.postService.deletePost(id).subscribe(result => {
+      this.getPosts();
+    });
+  }
+
   matchPasswords() {
     if(!this.form) return;
     const { password, confirm } = this.form.getRawValue();

@@ -69,7 +69,10 @@
                 <mat-card>
                     <mat-card-title class="title">{{post.title}}</mat-card-title>
                     <mat-card-content>
-                        <button mat-raised-button (click)="seePost(post._id)">Visitar foro</button>
+                        <button mat-raised-button (click)="deletePost(post._id)" color="primary" aria-label="Example icon button with a delete icon">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                        <button mat-raised-button (click)="seePost(post._id)">Ver post</button>
                     </mat-card-content>
                 </mat-card>
             </div>
