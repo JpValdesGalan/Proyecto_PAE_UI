@@ -28,6 +28,7 @@ export class PostComponent implements OnInit {
     username: '',
     email: '',
     profile_picture: '',
+    createdAt: ''
   };
 
   commentAuthor: User = {
@@ -35,6 +36,7 @@ export class PostComponent implements OnInit {
     username: '',
     email: '',
     profile_picture: '',
+    createdAt: ''
   };
 
   post: Post = {

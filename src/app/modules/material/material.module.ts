@@ -9,6 +9,8 @@ import { NgxMatFileInputModule  } from '@angular-material-components/file-input'
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from "@angular/material/card";
 import { MatButtonModule } from '@angular/material/button';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [],
@@ -24,7 +26,9 @@ import { MatButtonModule } from '@angular/material/button';
     NgxMatFileInputModule,
     MatIconModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatPaginatorModule,
+    MatTableModule,
   ]
 })
 

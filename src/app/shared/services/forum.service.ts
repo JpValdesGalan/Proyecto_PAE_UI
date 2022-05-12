@@ -45,4 +45,8 @@ export class ForumService {
     return this.httpClient.post(forumURL, formData,  {responseType: 'text'});
   }
 
+  getAllForumsUser(id: string): Observable<any> {
+    const forumsURL = environment.BackendURL + '/userForums/user/' + id;
+    return this.httpClient.get(forumsURL);
+  }
 }

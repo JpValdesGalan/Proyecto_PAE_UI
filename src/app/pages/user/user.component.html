@@ -4,10 +4,10 @@
         <div mat-card-avatar class="user-image">
             <img class="user-image" src="{{imageURL}}">
         </div>
-        <div class="username">{{decodedToken.username}}</div>
+        <div class="username">{{user.username}}</div>
         <div class="dateCreated">
             <h2>El usuario se creo el:</h2>
-            <p>{{decodedToken.createdAt}}</p>
+            <p>{{user.createdAt}}</p>
         </div>
     </div>
 </section>
@@ -16,25 +16,33 @@
     <div class="container">
         <div class="forum-list-container">
             <h2>Foros seguidos</h2>
-            <div class="forum-list" >
+            <div class="forum-list">
                 <mat-card>
                     <mat-card-title class="title">forumTitle</mat-card-title>
                     <mat-card-content>
-                        <button mat-raised-button (click)="seeForum('123')">Visitar foro</button>
+                        <button mat-raised-button (click)="seeForum()">Visitar foro</button>
                     </mat-card-content>
                 </mat-card>
             </div>
+            <mat-paginator [length]="totalSizeForums" [pageSize]="pageSizeForums"
+            [showFirstLastButtons]="true" [pageIndex]="currentPageForums" (page)="handlePageForums($event)"
+            aria-label="Select page">
+        </mat-paginator>
         </div>
         <div class="post-list-container">
             <h2>Ultimos Posts</h2>
-            <div class="post-list" >
+            <div class="post-list">
                 <mat-card>
                     <mat-card-title class="title">Post Title</mat-card-title>
                     <mat-card-content>
-                        <button mat-raised-button (click)="seeForum('123')">Visitar foro</button>
+                        <button mat-raised-button (click)="seeForum()">Visitar foro</button>
                     </mat-card-content>
                 </mat-card>
             </div>
+            <mat-paginator [length]="totalSizePosts" [pageSize]="pageSizePosts"
+            [showFirstLastButtons]="true" [pageIndex]="currentPagePosts" (page)="handlePagePosts($event)"
+            aria-label="Select page">
+        </mat-paginator>
         </div>
     </div>
 </section>

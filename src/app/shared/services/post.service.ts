@@ -25,4 +25,9 @@ export class PostService {
     const postURL = environment.BackendURL + '/posts/';
     return this.httpClient.post(postURL, formData,  {responseType: 'text'});
   }
+
+  getUserPosts(id: string): Observable <any> {
+    const myPostURL = environment.BackendURL + '/posts/user/' + id;
+    return this.httpClient.get(myPostURL);
+  }
 }

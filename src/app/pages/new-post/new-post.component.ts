@@ -31,6 +31,7 @@ export class NewPostComponent implements OnInit {
     username: '',
     email: '',
     profile_picture: '',
+    createdAt: ''
   };
   role: Role = {
     _id: '',

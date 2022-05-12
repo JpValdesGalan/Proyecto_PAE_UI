@@ -29,6 +29,7 @@ export class NewForumComponent implements OnInit {
     username: '',
     email: '',
     profile_picture: '',
+    createdAt: ''
   };
   decodedToken: any = {};
   form: FormGroup;
