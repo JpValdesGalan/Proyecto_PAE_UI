@@ -23,13 +23,13 @@
     <div class="post" *ngFor="let post of posts; index as index">
       <mat-card>
       <mat-card-header >
-        <div mat-card-avatar class="post-header-image">
-          <img class="post-header-image" src="{{authorImageURL}}">
+        <div mat-card-avatar class="post-header-image" >
+          <img class="post-header-image" src="{{URL}}/images/{{authors[index].profile_picture}}">
         </div>
         <mat-card-title>{{authors[index].username}}</mat-card-title>
         <mat-card-subtitle *ngIf="roles[index]" [ngStyle]="{'color': roles[index].color}">{{roles[index].name}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="{{postImageURL}}/images/{{posts[index].content}}" alt="Post image" class="post-body-image">
+      <img mat-card-image src="{{URL}}/images/{{posts[index].content}}" alt="Post image" class="post-body-image">
       <mat-card-content>
         <h3>{{posts[index].title}}</h3>
       </mat-card-content>

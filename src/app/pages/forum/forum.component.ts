@@ -43,8 +43,7 @@ export class ForumComponent implements OnInit {
   };
 
   forumImageURL: string = '';
-  postImageURL: string = '';
-  authorImageURL: string = '';
+  URL: string = '';
   forumID: any;
   socketClient: any = null;
 
@@ -65,7 +64,7 @@ export class ForumComponent implements OnInit {
 
     this.forumID = this.route.snapshot.paramMap.get('id');
     this.socketClient.emit('viewPosts', this.forumID);
-    this.postImageURL = environment.BackendURL;
+    this.URL = environment.BackendURL;
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
     this.forumService.getForum(this.forumID).subscribe((result: Forum) => {
       this.forum = result;
@@ -86,11 +85,6 @@ export class ForumComponent implements OnInit {
         }
       });
     });
-  }
-
-  updateImages(index: number) {
-    this.authorImageURL = environment.BackendURL + '/images/' + this.authors[index].profile_picture;
-    this.postImageURL = environment.BackendURL + '/images/' + this.posts[index].content;
   }
 
   seePost(id: string): void {
