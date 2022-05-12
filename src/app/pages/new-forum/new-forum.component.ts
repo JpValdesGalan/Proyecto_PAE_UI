@@ -9,6 +9,8 @@ import { RoleService } from 'src/app/shared/services/role.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import jwt_decode from 'jwt-decode';
+import * as socketIo from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-new-forum',
@@ -36,6 +38,8 @@ export class NewForumComponent implements OnInit {
   created: boolean = false;
   sendFile: any;
   imgSrc: string;
+  socketClient: any = null;
+  
 
   constructor(
     private forumService: ForumService,
@@ -55,6 +59,7 @@ export class NewForumComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.socketClient = socketIo.io(environment.BackendURL);
     this.userService.getUser(this.decodedToken._id).subscribe(result => {
       this.currentUser = result;
     });
@@ -66,8 +71,8 @@ export class NewForumComponent implements OnInit {
       this.form.value.archivo = this.sendFile;
       this.forumService.createForum(this.form.value).subscribe(result => {
         if (!result.error) {
-          this.created = true;
-          this.router.navigate(['/forum/' + result._id]);
+          this.socketClient.emit('viewForums', "hola");
+          this.router.navigate(['/home']);
         }
         else {
           console.log(result.error);

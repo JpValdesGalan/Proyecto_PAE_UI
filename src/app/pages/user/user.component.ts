@@ -10,6 +10,8 @@ import { environment } from 'src/environments/environment';
 import { User } from 'src/app/shared/interfaces/user';
 import { Post } from 'src/app/shared/interfaces/post';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 
 
@@ -33,6 +35,7 @@ export class UserComponent implements OnInit {
   public forums: Forum[] = [];
   public posts: Post[] = [];
   imageURL: string = '';
+  form: FormGroup;
 
   public displayedColumnsPosts = ['', '', '', '', ''];
   public dataSourcePosts: any;
@@ -45,6 +48,9 @@ export class UserComponent implements OnInit {
   public pageSizeForums = 10;
   public currentPageForums = 0;
   public totalSizeForums = 0;
+  wantsToEdit: boolean = false;
+  sendFile: any;
+  imgSrc: string = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
 
@@ -52,7 +58,17 @@ export class UserComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private postService: PostService,
-  ) { }
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.form = this.formBuilder.group({
+      username: [''],
+      password: ['',  Validators.minLength(8)],
+      confirm: ['',  Validators.minLength(8)]
+   }, {
+    Validators: this.matchPasswords.bind(this)
+   });
+  }
 
   ngOnInit(): void {
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
@@ -70,6 +86,7 @@ export class UserComponent implements OnInit {
       this.dataSourcePosts = new MatTableDataSource<Element>(myPosts);
       this.dataSourcePosts.paginator = this.paginator;
       this.posts = myPosts;
+      this.posts.reverse();
       this.totalSizePosts = this.posts.length;
       this.iteratorPosts();
     });
@@ -79,8 +96,13 @@ export class UserComponent implements OnInit {
     this.forumService.getAllForumsUser(this.user._id).subscribe(myForums => {
       this.dataSourceForums = new MatTableDataSource<Element>(myForums);
       this.dataSourceForums.paginator = this.paginator;
-      this.forums = myForums;
-      this.totalSizeForums = this.forums.length;
+      this.totalSizeForums = myForums.length;
+      for(let i = 0; i < myForums.length; i++){
+        this.forumService.getForum(myForums[i].id_forum).subscribe(forum => {
+          this.forums[i] = forum;
+        });
+      }
+      this.forums.reverse();
       this.iteratorForums();
     });
   }
@@ -119,8 +141,43 @@ export class UserComponent implements OnInit {
     this.iteratorForums();
   }
 
-  seeForum(){
-    
+  seeForum(id: string){
+    this.router.navigate(['/forum', id]);
   }
 
+  seePost(id: string){
+    this.router.navigate(['/post', id]);
+  }
+
+  matchPasswords() {
+    if(!this.form) return;
+    const { password, confirm } = this.form.getRawValue();
+    if(password === confirm) {
+      return null;
+    } else {
+      return { passwordMismatch: true };
+    }
+  }
+
+  sendData() {
+    if(this.form.valid) {
+      this.form.value._id = this.user._id;
+      this.form.value.file = this.sendFile;
+      this.userService.updateUser(this.form.value).subscribe(res => {
+        if(!res.error) window.location.reload();
+      });
+    }
+  }
+
+  onFileChange(event: any) {
+    let file = event.target.files[0];
+    const reader = new FileReader();
+    if (file) {
+      this.sendFile = file;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgSrc = reader.result as string;
+      };
+    }
+  }
 }

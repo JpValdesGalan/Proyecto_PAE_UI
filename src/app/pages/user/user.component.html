@@ -5,6 +5,9 @@
             <img class="user-image" src="{{imageURL}}">
         </div>
         <div class="username">{{user.username}}</div>
+        <div class="editButton">
+            <button (click)="wantsToEdit = !wantsToEdit">{{wantsToEdit ? 'Cancelar' : 'Editar usuario'}}</button>
+        </div>
         <div class="dateCreated">
             <h2>El usuario se creo el:</h2>
             <p>{{user.createdAt}}</p>
@@ -12,37 +15,68 @@
     </div>
 </section>
 
-<section id="content">
+<div class="containerForm" *ngIf="wantsToEdit">
+    <form  [formGroup]="form" (submit)="sendData()">
+        <div mat-card-avatar class="user-image">
+            <img class="user-image" src="{{imgSrc ? imgSrc : imageURL}}">
+            <label for="file-upload" class="custom-file-upload">Imagen de perfil</label>
+            <input type="file" id="file-upload" [multiple]="false"accept="image/jpg, image/png, image/gif"  (change)="onFileChange($event);">
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label for="username">Username </mat-label>
+                <input matInput type="text" name="username" placeholder="Username" formControlName="username" value="{{user.username}}">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label for="password">Password</mat-label>
+                <input matInput type="password" name="password" placeholder="Password" formControlName="password">
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="fill">
+                <mat-label for="password">Confirm password</mat-label>
+                <input matInput type="password" name="confirm" placeholder="Confirm your password"
+                    formControlName="confirm">
+            </mat-form-field>
+        </div>
+        <button type="submit">Guardar cambios</button>
+    </form>
+</div>
+
+<section id="content" *ngIf="!wantsToEdit">
     <div class="container">
+
         <div class="forum-list-container">
             <h2>Foros seguidos</h2>
-            <div class="forum-list">
+            <div class="forum-list" *ngFor="let forum of forums">
                 <mat-card>
-                    <mat-card-title class="title">forumTitle</mat-card-title>
+                    <mat-card-title class="title">{{forum.title}}</mat-card-title>
                     <mat-card-content>
-                        <button mat-raised-button (click)="seeForum()">Visitar foro</button>
+                        <button mat-raised-button (click)="seeForum(forum._id)">Visitar foro</button>
                     </mat-card-content>
                 </mat-card>
             </div>
-            <mat-paginator [length]="totalSizeForums" [pageSize]="pageSizeForums"
-            [showFirstLastButtons]="true" [pageIndex]="currentPageForums" (page)="handlePageForums($event)"
-            aria-label="Select page">
-        </mat-paginator>
+            <mat-paginator [length]="totalSizeForums" [pageSize]="pageSizeForums" [showFirstLastButtons]="true"
+                [pageIndex]="currentPageForums" (page)="handlePageForums($event)" aria-label="Select page">
+            </mat-paginator>
         </div>
+
         <div class="post-list-container">
             <h2>Ultimos Posts</h2>
-            <div class="post-list">
+            <div class="post-list" *ngFor="let post of posts">
                 <mat-card>
-                    <mat-card-title class="title">Post Title</mat-card-title>
+                    <mat-card-title class="title">{{post.title}}</mat-card-title>
                     <mat-card-content>
-                        <button mat-raised-button (click)="seeForum()">Visitar foro</button>
+                        <button mat-raised-button (click)="seePost(post._id)">Visitar foro</button>
                     </mat-card-content>
                 </mat-card>
             </div>
-            <mat-paginator [length]="totalSizePosts" [pageSize]="pageSizePosts"
-            [showFirstLastButtons]="true" [pageIndex]="currentPagePosts" (page)="handlePagePosts($event)"
-            aria-label="Select page">
-        </mat-paginator>
+            <mat-paginator [length]="totalSizePosts" [pageSize]="pageSizePosts" [showFirstLastButtons]="true"
+                [pageIndex]="currentPagePosts" (page)="handlePagePosts($event)" aria-label="Select page">
+            </mat-paginator>
         </div>
+
     </div>
 </section>

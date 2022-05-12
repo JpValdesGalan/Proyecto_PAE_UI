@@ -18,6 +18,7 @@ import { ForumComponent } from './pages/forum/forum.component';
 import { NewForumComponent } from './pages/new-forum/new-forum.component';
 import { PostComponent } from './pages/post/post.component';
 import { NewPostComponent } from './pages/new-post/new-post.component';
+import { UserComponent } from './pages/user/user.component';
 import { OnCreate } from './shared/directives/on-create.directive';
 
 import { AuthGuard } from './shared/guards/auth.guard';
@@ -26,7 +27,6 @@ import { RouterModule } from '@angular/router';
 
 //SSO
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
-import { UserComponent } from './pages/user/user.component';
 
 @NgModule({
   declarations: [
