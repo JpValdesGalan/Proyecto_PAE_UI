@@ -8,13 +8,12 @@ import { Observable } from 'rxjs';
 })
 export class PostService {
 
-  postObservable: any;
 
   constructor(private httpClient: HttpClient) { }
 
-  getPost(id: string): void{
+  getPost(id: string): Observable<any>{
     const postURL = environment.BackendURL + '/posts/' + id;
-    this.postObservable = this.httpClient.get(postURL);
+    return this.httpClient.get(postURL);
   }
 
   publishPost(upload: any): Observable<any>{

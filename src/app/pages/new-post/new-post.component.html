@@ -1,6 +1,6 @@
 <section id="forum-info">
     <div class="forum-card">
-      <!-- <img src="{{forum.picture}}" alt="Forum Image" class="forum-image"> -->
+      <img src="{{forumImageURL}}" alt="Forum Image" class="forum-image">
       <div class="forum-card-content">
         <div class="forum-card-text">
           <h1>{{forum.title}}</h1>
@@ -15,7 +15,9 @@
   <div class="post-card-container">
     <mat-card  class="">
       <mat-card-header>
-        <div mat-card-avatar class="post-header-image"></div>
+        <div mat-card-avatar class="post-header-image">
+          <img class="post-header-image" src="{{userImageURL}}">
+        </div>
         <mat-card-title>{{decodedToken.username}}</mat-card-title>
         <mat-card-subtitle [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
       </mat-card-header>

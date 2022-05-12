@@ -8,12 +8,11 @@ import { Observable } from 'rxjs';
 })
 export class ForumService {
 
-  forumObservable: any;
   constructor(private httpClient: HttpClient) { }
 
-  getForum(id: string){
+  getForum(id: string): Observable<any>{
     const forumURL = environment.BackendURL + '/forums/' + id;
-    this.forumObservable = this.httpClient.get(forumURL);
+    return this.httpClient.get(forumURL);
   }
 
   getAllPosts(id: string): Observable<any>{

@@ -7,9 +7,10 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { RoleService } from 'src/app/shared/services/role.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import jwt_decode from 'jwt-decode';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-new-post',
@@ -41,6 +42,9 @@ export class NewPostComponent implements OnInit {
   created: boolean = false;
   sendFile: any;
   imgSrc: string;
+  forumID: any;
+  forumImageURL: string = '';
+  userImageURL: string = '';
 
   constructor(private forumService: ForumService,
     private postService: PostService,
@@ -48,7 +52,8 @@ export class NewPostComponent implements OnInit {
     private authService: AuthService,
     private userService: UserService,
     private roleService: RoleService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
     this.form = this.formBuilder.group({
       title: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
     });
@@ -57,10 +62,13 @@ export class NewPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.forumService.forumObservable.subscribe((result: Forum) => {
+    this.forumID = this.route.snapshot.paramMap.get('id');
+    this.forumService.getForum(this.forumID).subscribe((result: Forum) => {
       this.forum = result;
+      this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
       this.userService.getUser(this.decodedToken._id).subscribe(result => {
         this.currentUser = result;
+        this.userImageURL = environment.BackendURL + '/images/' + this.currentUser.profile_picture;
         this.getRole();
       });
     });

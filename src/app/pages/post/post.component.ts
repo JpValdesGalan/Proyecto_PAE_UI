@@ -8,7 +8,7 @@ import { RoleService } from 'src/app/shared/services/role.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { CommentsService } from 'src/app/shared/services/comments.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
@@ -57,6 +57,7 @@ export class PostComponent implements OnInit {
   created: boolean = false;
   isLogged: boolean = false;
   postImageURL: string = '';
+  idForum: any;
 
   constructor(private userService: UserService,
               private postService: PostService,
@@ -64,7 +65,8 @@ export class PostComponent implements OnInit {
               private commentsService: CommentsService,
               private roleService: RoleService,
               private formBuilder: FormBuilder,
-              private router: Router
+              private router: Router,
+              private route: ActivatedRoute
               ) {
                 this.form = this.formBuilder.group({
                   message: ['', [Validators.required, Validators.maxLength(250)]]
@@ -73,8 +75,9 @@ export class PostComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    this.idForum = this.route.snapshot.paramMap.get('id');
     this.isLogged = this.authService.isLoggedIn();
-    this.postService.postObservable.subscribe((result: Post) => {
+    this.postService.getPost(this.idForum).subscribe((result: Post) => {
       this.post = result;
       this.postImageURL = environment.BackendURL + '/images/' + this.post.content;
       this.getAuthor(this.post.id_author);

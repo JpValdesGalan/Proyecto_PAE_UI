@@ -22,6 +22,7 @@ import { OnCreate } from './shared/directives/on-create.directive';
 
 import { AuthGuard } from './shared/guards/auth.guard';
 import { environment } from 'src/environments/environment';
+import { RouterModule } from '@angular/router';
 
 //SSO
 import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from '@abacritt/angularx-social-login';
@@ -52,7 +53,8 @@ import { UserComponent } from './pages/user/user.component';
     BrowserAnimationsModule,
     MaterialModule,
     CommonModule,
-    SocialLoginModule
+    SocialLoginModule,
+    RouterModule
   ],
   providers: [
     {

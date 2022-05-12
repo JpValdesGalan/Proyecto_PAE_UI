@@ -92,11 +92,7 @@ export class HomeComponent implements OnInit {
   }
 
   seeForum(id: string){
-    this.forumService.getForum(id);
-    this.forumService.forumObservable.subscribe((result: Forum) => {
-      this.selectedForum = result;
-      this.router.navigate([`forum/${this.selectedForum.title}`]);
-    });
+    this.router.navigate(['/forum', id]);
   }
 }
 

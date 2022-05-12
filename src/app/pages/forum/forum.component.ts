@@ -8,7 +8,7 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { RoleService } from 'src/app/shared/services/role.service';
 import { PostService } from 'src/app/shared/services/post.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { environment } from 'src/environments/environment';
 
@@ -45,19 +45,22 @@ export class ForumComponent implements OnInit {
   forumImageURL: string = '';
   postImageURL: string = '';
   authorImageURL: string = '';
+  forumID: any;
 
   constructor(private forumService: ForumService,
     private userService: UserService,
     private roleService: RoleService,
     private postService: PostService,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.forumID = this.route.snapshot.paramMap.get('id');
     this.postImageURL = environment.BackendURL;
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
-    this.forumService.forumObservable.subscribe((result: Forum) => {
+    this.forumService.getForum(this.forumID).subscribe((result: Forum) => {
       this.forum = result;
       this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
       this.suscribeButtonToggle();
@@ -83,11 +86,7 @@ export class ForumComponent implements OnInit {
   }
 
   seePost(id: string): void{
-    this.postService.getPost(id);
-    this.postService.postObservable.subscribe((result: Post) => {
-      this.selectedPost = result;
-      this.router.navigate(['/post']);
-    });
+    this.router.navigate(['/post', id]);
   }
 
   suscribeButtonToggle(): void{
@@ -123,5 +122,8 @@ export class ForumComponent implements OnInit {
         });
       }
     }
+  }
+  createPost() {
+    this.router.navigate(['/new-post', this.forumID]);
   }
 }
