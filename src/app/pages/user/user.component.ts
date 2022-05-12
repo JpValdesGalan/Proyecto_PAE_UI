@@ -153,6 +153,7 @@ export class UserComponent implements OnInit {
     this.postService.deletePost(id).subscribe(result => {
       this.getPosts();
     });
+    window.location.reload();
   }
 
   matchPasswords() {

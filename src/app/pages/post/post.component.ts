@@ -62,6 +62,7 @@ export class PostComponent implements OnInit {
   idForum: any;
   socketClient: any = null;
   URL: string = '';
+  wantsToEdit: boolean = false;
 
   constructor(private userService: UserService,
     private postService: PostService,
@@ -130,11 +131,30 @@ export class PostComponent implements OnInit {
     }
   }
 
+  deleteComment(id: string) {
+    this.commentsService.deleteComment(id).subscribe(response => {
+      this.socketClient.emit('viewComments', this.post._id);
+    });
+    window.location.reload();
+  }
+
+  editComment(id: string) {
+    this.commentsService.updateComment(id, this.form.value).subscribe(response => {
+      this.socketClient.emit('viewComments', this.post._id);
+    });
+    this.wantsToEdit = false;
+    window.location.reload();
+  }
+
   getDecodedAccessToken(token: string): any {
     try {
       return jwt_decode(token);
     } catch (Error) {
       return null;
     }
+  }
+
+  ownsComment(id: string): boolean {
+    return this.decodedToken._id === id;
   }
 }

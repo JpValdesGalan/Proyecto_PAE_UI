@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './modules/material/material.module';
 import { CommonModule } from '@angular/common';
+import { MatMenuModule } from "@angular/material/menu";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,18 +45,19 @@ import { SocialLoginModule, SocialAuthServiceConfig, GoogleLoginProvider } from 
     OnCreate,
     UserComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    MaterialModule,
-    CommonModule,
-    SocialLoginModule,
-    RouterModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MaterialModule,
+        CommonModule,
+        SocialLoginModule,
+        RouterModule,
+        MatMenuModule
+    ],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',

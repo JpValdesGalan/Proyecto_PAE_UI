@@ -20,4 +20,14 @@ export class CommentsService {
     const postURL = environment.BackendURL + '/comments/';
     return this.httpClient.post(postURL, upload, {responseType: 'text'});
   }
+
+  deleteComment(id: string) {
+    const deleteURL = environment.BackendURL + '/comments/' + id;
+    return this.httpClient.delete(deleteURL);
+  }
+
+  updateComment(id: string, upload: any): Observable <any> {
+    const updateURL = environment.BackendURL + '/comments/' + id;
+    return this.httpClient.put(updateURL, upload, {responseType: 'text'});
+  }
 }
