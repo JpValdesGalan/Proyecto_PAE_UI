@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
-import { Content } from '@angular/compiler/src/render3/r3_ast';
+import * as socketIo from 'socket.io-client';
 
 @Component({
   selector: 'app-post',
@@ -55,11 +55,12 @@ export class PostComponent implements OnInit {
   };
   
   form: FormGroup;
-  comments: Comment[] = []
+  comments: Comment[] = [];
   created: boolean = false;
   isLogged: boolean = false;
   postImageURL: string = '';
   idForum: any;
+  socketClient: any  = null;
 
   constructor(private userService: UserService,
               private postService: PostService,
@@ -67,7 +68,6 @@ export class PostComponent implements OnInit {
               private commentsService: CommentsService,
               private roleService: RoleService,
               private formBuilder: FormBuilder,
-              private router: Router,
               private route: ActivatedRoute
               ) {
                 this.form = this.formBuilder.group({
@@ -77,6 +77,11 @@ export class PostComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    this.socketClient = socketIo.io(environment.BackendURL);
+
+    this.socketClient.on('viewComments', (data: any) => {
+      this.comments = data;
+    });
     this.idForum = this.route.snapshot.paramMap.get('id');
     this.isLogged = this.authService.isLoggedIn();
     this.postService.getPost(this.idForum).subscribe((result: Post) => {
@@ -84,10 +89,9 @@ export class PostComponent implements OnInit {
       this.postImageURL = environment.BackendURL + '/images/' + this.post.content;
       this.getAuthor(this.post.id_author);
       this.decodedToken = this.getDecodedAccessToken(this.authService.get());
-      this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {
-        this.comments = results;
-      });
+      this.socketClient.emit('viewComments', result._id);
     });
+
   }
 
   getAuthor(id: string){
@@ -116,8 +120,7 @@ export class PostComponent implements OnInit {
       this.form.value.id_user = this.decodedToken._id;
       this.form.value.id_post = this.post._id;
       this.commentsService.publishComment(this.form.value).subscribe(response => {
-        if(!response.error) this.router.navigate(['/home']); 
-        else this.created = true;
+        if(!response.error) this.socketClient.emit('viewComments', this.post._id);
       });
     }
   }

@@ -6,6 +6,8 @@ import { Forum } from '../../shared/interfaces/forum';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import jwt_decode from 'jwt-decode';
+import * as socketIo from 'socket.io-client';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-home',
@@ -35,25 +37,36 @@ export class HomeComponent implements OnInit {
     picture: '',
     id_author: ''
   };
+  socketClient: any = null;
 
   constructor(private counterService: CountersService,
-              private homeforumsService: HomeforumsService,
-              private forumService: ForumService,
-              private router: Router,
-              private authService: AuthService
-              ) {}
+    private homeforumsService: HomeforumsService,
+    private forumService: ForumService,
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
   ngOnInit(): void {
+    this.socketClient = socketIo.io(environment.BackendURL);
+
+    this.socketClient.on('viewForums', (data: any) => {
+      this.forums = data;
+    });
+
     if (!localStorage.getItem('firstReload') || localStorage.getItem('firstReload') == 'true') {
       localStorage.setItem('firstReload', 'false');
       window.location.reload();
     } else {
       localStorage.setItem('firstReload', 'true');
     }
-    this.homeforumsService.getForums().subscribe(result => {
-      this.forums = result;
+    this.socketClient.emit('viewForums', (data: any) => {
+      this.forums = data;
       this.filteredForums = this.forums;
     });
+    //this.homeforumsService.getForums().subscribe(result => {
+    // this.forums = result;
+    //this.filteredForums = this.forums;
+    //});
     this.counterService.countComments().subscribe(result => {
       this.numberReplies = result.count;
     });
@@ -68,7 +81,7 @@ export class HomeComponent implements OnInit {
     });
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
     this.isLogged = this.authService.isLoggedIn();
-    
+
   }
 
   getDecodedAccessToken(token: string): any {
@@ -79,8 +92,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  doSearch(){
-    if(this.searchTimeout){
+  doSearch() {
+    if (this.searchTimeout) {
       clearTimeout(this.searchTimeout);
     }
     this.searchTimeout = setTimeout(() => {
@@ -91,11 +104,11 @@ export class HomeComponent implements OnInit {
     }, 200);
   }
 
-  seeForum(id: string){
+  seeForum(id: string) {
     this.router.navigate(['/forum', id]);
   }
 
-  newForum(){
+  newForum() {
     this.router.navigate(['/new-forum']);
   }
 }

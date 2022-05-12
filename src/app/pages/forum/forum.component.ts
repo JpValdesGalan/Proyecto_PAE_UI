@@ -6,11 +6,11 @@ import { Role } from 'src/app/shared/interfaces/role';
 import { ForumService } from 'src/app/shared/services/forum.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import { RoleService } from 'src/app/shared/services/role.service';
-import { PostService } from 'src/app/shared/services/post.service';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import jwt_decode from 'jwt-decode';
 import { environment } from 'src/environments/environment';
+import * as socketIo from 'socket.io-client';
 
 @Component({
   selector: 'app-forum',
@@ -46,54 +46,58 @@ export class ForumComponent implements OnInit {
   postImageURL: string = '';
   authorImageURL: string = '';
   forumID: any;
+  socketClient: any = null;
 
   constructor(private forumService: ForumService,
     private userService: UserService,
     private roleService: RoleService,
-    private postService: PostService,
     private router: Router,
     private route: ActivatedRoute,
     private authService: AuthService) {
   }
 
   ngOnInit(): void {
+    this.socketClient = socketIo.io(environment.BackendURL);
+
+    this.socketClient.on('viewPosts', (data: any) => {
+      this.posts = data;
+    });
+
     this.forumID = this.route.snapshot.paramMap.get('id');
+    this.socketClient.emit('viewPosts', this.forumID);
     this.postImageURL = environment.BackendURL;
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
     this.forumService.getForum(this.forumID).subscribe((result: Forum) => {
       this.forum = result;
-      this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
       this.suscribeButtonToggle();
-      this.forumService.getAllPosts(this.forum._id).subscribe(results => {
-        this.posts = results;
-        for(let i = 0; i < this.posts.length; i++){
-          this.userService.getUser(this.posts[i].id_author).subscribe(author => {
-            this.authors[i] = author;
-            this.userService.getUserInForum(this.forum._id, this.authors[i]._id).subscribe( userForum => {
-              this.roleService.getRole(userForum.id_role).subscribe(role => {
-                this.roles[i] = role;
-              });
+      this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
+      for (let i = 0; i < this.posts.length; i++) {
+        this.userService.getUser(this.posts[i].id_author).subscribe(author => {
+          this.authors[i] = author;
+          this.userService.getUserInForum(this.forum._id, this.authors[i]._id).subscribe(userForum => {
+            this.roleService.getRole(userForum.id_role).subscribe(role => {
+              this.roles[i] = role;
             });
           });
-        }
-      });
+        });
+      }
     });
   }
 
-  updateImages(index: number){
+  updateImages(index: number) {
     this.authorImageURL = environment.BackendURL + '/images/' + this.authors[index].profile_picture;
     this.postImageURL = environment.BackendURL + '/images/' + this.posts[index].content;
   }
 
-  seePost(id: string): void{
+  seePost(id: string): void {
     this.router.navigate(['/post', id]);
   }
 
-  suscribeButtonToggle(): void{
-    if(!this.authService.isLoggedIn) this.isInForum = false;
-    else{
+  suscribeButtonToggle(): void {
+    if (!this.authService.isLoggedIn) this.isInForum = false;
+    else {
       this.userService.getUserInForum(this.forum._id, this.decodedToken._id).subscribe(result => {
-        if(result) this.isInForum = true;
+        if (result) this.isInForum = true;
         else this.isInForum = false;
       });
     }
@@ -107,18 +111,18 @@ export class ForumComponent implements OnInit {
     }
   }
 
-  subscribeOrDelete(action: boolean){
-    if(!this.authService.isLoggedIn()) this.router.navigate(['/login']);
-    else{
-      if(action){
+  subscribeOrDelete(action: boolean) {
+    if (!this.authService.isLoggedIn()) this.router.navigate(['/login']);
+    else {
+      if (action) {
         this.userService.getUserInForum(this.forum._id, this.decodedToken._id).subscribe(response => {
           this.forumService.leaveForum(response._id).subscribe(res => {
-            if(res) this.isInForum = !this.isInForum;
+            if (res) this.isInForum = !this.isInForum;
           });
         });
       } else {
         this.forumService.joinForum(this.decodedToken._id, this.forum._id).subscribe(response => {
-          if(response) this.isInForum = !this.isInForum;
+          if (response) this.isInForum = !this.isInForum;
         });
       }
     }
