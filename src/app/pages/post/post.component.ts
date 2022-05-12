@@ -126,6 +126,7 @@ export class PostComponent implements OnInit {
       this.commentsService.publishComment(this.form.value).subscribe(response => {
         if (!response.error) this.socketClient.emit('viewComments', this.post._id);
       });
+      window.location.reload();
     }
   }
 
