@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
   numberForums: Number = 0;
   numberUsers: Number = 0;
   numberReplies: Number = 0;
-  numberTopics: Number = 0;
+  numberPosts: Number = 0;
 
   forums: Forum[] = [];
   filteredForums: Forum[] = [];
@@ -72,8 +72,8 @@ export class HomeComponent implements OnInit {
     this.counterService.countForums().subscribe(result => {
       this.numberForums = result.count;
     });
-    this.counterService.countTags().subscribe(result => {
-      this.numberTopics = result.count;
+    this.counterService.countPosts().subscribe(result => {
+      this.numberPosts = result.count;
     });
     this.counterService.countUsers().subscribe(result => {
       this.numberUsers = result.count;

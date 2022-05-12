@@ -20,6 +20,11 @@ export class CountersService {
     return this.httpClient.get(counterURL, {responseType: 'json'});
   }
 
+  countPosts(): Observable <any> {
+    const counterURL = environment.BackendURL + '/posts/count';
+    return this.httpClient.get(counterURL, {responseType: 'json'});
+  }
+
   countTags(): Observable <any>{
     const counterURL = environment.BackendURL + '/tags/count';
     return this.httpClient.get(counterURL, {responseType: 'json'});
