@@ -94,5 +94,9 @@ export class HomeComponent implements OnInit {
   seeForum(id: string){
     this.router.navigate(['/forum', id]);
   }
+
+  newForum(){
+    this.router.navigate(['/new-forum']);
+  }
 }
 

@@ -20,7 +20,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'loginSucces', component: LoginSuccesComponent, canActivate: [AuthGuard] },
   { path: 'forum/:id', component: ForumComponent},
-  { path: 'new-forum/:id', component: NewForumComponent, canActivate: [AuthGuard]},
+  { path: 'new-forum', component: NewForumComponent, canActivate: [AuthGuard]},
   { path: 'post/:id', component: PostComponent},
   { path: 'new-post/:id', component: NewPostComponent, canActivate: [AuthGuard]},
   { path: 'user', component: UserComponent, canActivate: [AuthGuard]},
