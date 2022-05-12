@@ -53,28 +53,28 @@ export class PostComponent implements OnInit {
     name: '',
     color: ''
   };
-  
+
   form: FormGroup;
   comments: Comment[] = [];
   created: boolean = false;
   isLogged: boolean = false;
   postImageURL: string = '';
   idForum: any;
-  socketClient: any  = null;
+  socketClient: any = null;
 
   constructor(private userService: UserService,
-              private postService: PostService,
-              private authService: AuthService,
-              private commentsService: CommentsService,
-              private roleService: RoleService,
-              private formBuilder: FormBuilder,
-              private route: ActivatedRoute
-              ) {
-                this.form = this.formBuilder.group({
-                  message: ['', [Validators.required, Validators.maxLength(250)]]
-                });
-                this.decodedToken = this.getDecodedAccessToken(this.authService.get());
-              }
+    private postService: PostService,
+    private authService: AuthService,
+    private commentsService: CommentsService,
+    private roleService: RoleService,
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute
+  ) {
+    this.form = this.formBuilder.group({
+      message: ['', [Validators.required, Validators.maxLength(250)]]
+    });
+    this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+  }
 
   ngOnInit(): void {
     this.socketClient = socketIo.io(environment.BackendURL);
@@ -89,24 +89,27 @@ export class PostComponent implements OnInit {
       this.postImageURL = environment.BackendURL + '/images/' + this.post.content;
       this.getAuthor(this.post.id_author);
       this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+      this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {
+        this.comments = results;
+      });
       this.socketClient.emit('viewComments', result._id);
     });
 
   }
 
-  getAuthor(id: string){
+  getAuthor(id: string) {
     this.userService.getUser(id).subscribe(result => {
       this.postAuthor = result;
     });
   }
 
-  getCommentAuthor(id: string){
+  getCommentAuthor(id: string) {
     this.userService.getUser(id).subscribe(result => {
       this.commentAuthor = result;
       this.getRole();
     });
   }
-  
+
   getRole(): void {
     this.userService.getUserInForum(this.post.id_forum, this.commentAuthor._id).subscribe(result => {
       this.roleService.getRole(result.id_role).subscribe(role => {
@@ -116,11 +119,11 @@ export class PostComponent implements OnInit {
   }
 
   publishComment() {
-    if(this.form.valid){
+    if (this.form.valid) {
       this.form.value.id_user = this.decodedToken._id;
       this.form.value.id_post = this.post._id;
       this.commentsService.publishComment(this.form.value).subscribe(response => {
-        if(!response.error) this.socketClient.emit('viewComments', this.post._id);
+        if (!response.error) this.socketClient.emit('viewComments', this.post._id);
       });
     }
   }

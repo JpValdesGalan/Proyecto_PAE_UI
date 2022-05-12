@@ -48,25 +48,24 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.socketClient = socketIo.io(environment.BackendURL);
-
     this.socketClient.on('viewForums', (data: any) => {
+      console.log(data);
       this.forums = data;
+      this.filteredForums = this.forums;
     });
 
+    this.socketClient.emit('viewForums', "hola");
     if (!localStorage.getItem('firstReload') || localStorage.getItem('firstReload') == 'true') {
       localStorage.setItem('firstReload', 'false');
       window.location.reload();
     } else {
       localStorage.setItem('firstReload', 'true');
     }
-    this.socketClient.emit('viewForums', (data: any) => {
-      this.forums = data;
+    this.homeforumsService.getForums().subscribe(result => {
+      this.forums = result;
       this.filteredForums = this.forums;
+      this.filteredForums.reverse();
     });
-    //this.homeforumsService.getForums().subscribe(result => {
-    // this.forums = result;
-    //this.filteredForums = this.forums;
-    //});
     this.counterService.countComments().subscribe(result => {
       this.numberReplies = result.count;
     });

@@ -71,16 +71,20 @@ export class ForumComponent implements OnInit {
       this.forum = result;
       this.suscribeButtonToggle();
       this.forumImageURL = environment.BackendURL + '/images/' + this.forum.picture;
-      for (let i = 0; i < this.posts.length; i++) {
-        this.userService.getUser(this.posts[i].id_author).subscribe(author => {
-          this.authors[i] = author;
-          this.userService.getUserInForum(this.forum._id, this.authors[i]._id).subscribe(userForum => {
-            this.roleService.getRole(userForum.id_role).subscribe(role => {
-              this.roles[i] = role;
+      this.forumService.getAllPosts(this.forumID).subscribe(posts => {
+        this.posts = posts;
+        this.posts.reverse();
+        for (let i = 0; i < this.posts.length; i++) {
+          this.userService.getUser(this.posts[i].id_author).subscribe(author => {
+            this.authors[i] = author;
+            this.userService.getUserInForum(this.forum._id, this.authors[i]._id).subscribe(userForum => {
+              this.roleService.getRole(userForum.id_role).subscribe(role => {
+                this.roles[i] = role;
+              });
             });
           });
-        });
-      }
+        }
+      });
     });
   }
 
