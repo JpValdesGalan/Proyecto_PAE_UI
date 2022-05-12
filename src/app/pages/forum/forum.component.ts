@@ -33,15 +33,6 @@ export class ForumComponent implements OnInit {
   isInForum: boolean = false;
   decodedToken: any = {};
 
-  selectedPost: Post = {
-    _id: '',
-    title: '',
-    content: '',
-    id_author: '',
-    id_forum: '',
-    createdAt: '',
-  };
-
   forumImageURL: string = '';
   URL: string = '';
   forumID: any;

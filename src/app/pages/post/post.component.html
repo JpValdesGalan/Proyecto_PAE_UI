@@ -14,11 +14,13 @@
 </section>
 
 <section id="comments">
-  <div class="comment-container" *ngFor="let comment of comments">
+  <div class="comment-container" *ngFor="let comment of comments; index as index">
     <mat-card>
-      <mat-card-header (onCreate)="getCommentAuthor(comment.id_user)">
-        <div mat-card-avatar class="comment-header-image">imagen</div>
-        <mat-card-title>{{commentAuthor.username}}</mat-card-title>
+      <mat-card-header>
+        <div mat-card-avatar class="comment-header-image">
+          <img class="comment-header-image" src="">
+        </div>
+        <mat-card-title>{{authors[index].username}}</mat-card-title>
         <mat-card-subtitle  [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>
         <div class="comment-menu-panel">
           <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="ownsComment(comment.id_user)">

@@ -56,6 +56,7 @@ export class PostComponent implements OnInit {
 
   form: FormGroup;
   comments: Comment[] = [];
+  authors: User[] = [];
   created: boolean = false;
   isLogged: boolean = false;
   postImageURL: string = '';
@@ -80,7 +81,6 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.socketClient = socketIo.io(environment.BackendURL);
-
     this.socketClient.on('viewComments', (data: any) => {
       this.comments = data;
     });
@@ -93,6 +93,11 @@ export class PostComponent implements OnInit {
       this.decodedToken = this.getDecodedAccessToken(this.authService.get());
       this.commentsService.getAllCommentsForum(this.post._id).subscribe(results => {
         this.comments = results;
+        for (let i = 0; i < this.comments.length; i++) {
+          this.userService.getUser(this.comments[i].id_user).subscribe(author => {
+            this.authors[i] = author;
+          });
+        }
       });
       this.socketClient.emit('viewComments', result._id);
     });
@@ -108,8 +113,7 @@ export class PostComponent implements OnInit {
   getCommentAuthor(id: string) {
     this.userService.getUser(id).subscribe(result => {
       this.commentAuthor = result;
-      this.getRole();
-    });
+    })
   }
 
   getRole(): void {
