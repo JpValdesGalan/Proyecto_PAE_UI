@@ -62,7 +62,7 @@ export class PostComponent implements OnInit {
   idForum: any;
   socketClient: any = null;
   URL: string = '';
-  wantsToEdit: boolean = false;
+  wantsToEdit: string[] = [];
 
   constructor(private userService: UserService,
     private postService: PostService,
@@ -138,11 +138,19 @@ export class PostComponent implements OnInit {
     window.location.reload();
   }
 
+  wantsToEditComment(id: string) {
+    if (this.wantsToEdit.includes(id)) {
+      this.wantsToEdit.splice(this.wantsToEdit.indexOf(id), 1);
+    } else {
+      this.wantsToEdit.push(id);
+    }
+  }
+
   editComment(id: string) {
     this.commentsService.updateComment(id, this.form.value).subscribe(response => {
       this.socketClient.emit('viewComments', this.post._id);
     });
-    this.wantsToEdit = false;
+    this.wantsToEditComment(id);
     window.location.reload();
   }
 
