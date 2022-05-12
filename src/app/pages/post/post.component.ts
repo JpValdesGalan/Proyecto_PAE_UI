@@ -61,6 +61,7 @@ export class PostComponent implements OnInit {
   postImageURL: string = '';
   idForum: any;
   socketClient: any = null;
+  URL: string = '';
 
   constructor(private userService: UserService,
     private postService: PostService,

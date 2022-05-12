@@ -65,7 +65,9 @@ export class ForumComponent implements OnInit {
     this.forumID = this.route.snapshot.paramMap.get('id');
     this.socketClient.emit('viewPosts', this.forumID);
     this.URL = environment.BackendURL;
-    this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+    if(this.authService.isLoggedIn()){
+      this.decodedToken = this.getDecodedAccessToken(this.authService.get());
+    }
     this.forumService.getForum(this.forumID).subscribe((result: Forum) => {
       this.forum = result;
       this.suscribeButtonToggle();
@@ -92,8 +94,9 @@ export class ForumComponent implements OnInit {
   }
 
   suscribeButtonToggle(): void {
-    if (!this.authService.isLoggedIn) this.isInForum = false;
-    else {
+    if (!this.authService.isLoggedIn){
+      this.isInForum = false;
+    } else {
       this.userService.getUserInForum(this.forum._id, this.decodedToken._id).subscribe(result => {
         if (result) this.isInForum = true;
         else this.isInForum = false;
