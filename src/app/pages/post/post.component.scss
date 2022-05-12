@@ -6,7 +6,34 @@ section {
   height: 10px;
 }
 
+#post {
+  mat-card-header {
+    padding: 10px 0;
+    height: 50px
+  }
+
+  .post-header {
+    margin: auto;
+
+    mat-card-title {
+      margin: auto;
+      padding: 10px 0;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 26px;
+    }
+
+    .user {
+      width: 20%;
+      margin: 0 10px;
+    }
+  }
+}
+
 .post-card {
+  width: 90%;
   max-width: 980px;
   min-width: 480px;
   margin: auto;
@@ -29,48 +56,64 @@ section {
 }
 
 .post-content {
-  padding: 20px 100px;
+  padding: 20px 0;
 }
 
-.comment-container {
-  justify-content: space-between;
-  max-width: 640px;
-  min-width: 480px;
-  margin: auto;
+img {
+  object-fit: cover;
 }
 
-.comment-menu-panel {
-  margin-left: auto;
-}
+#comments {
+  padding-top: 15px;
 
-.comment-header-image {
-  background-size: cover;
-}
-
-h2 {
-  padding: 20px 0px;
-}
-
-.user {
-  padding: 20px 0px;
-}
-
-.comment-section {
-  display: inline;
-  width: 100%;
-  max-width: 640px;
-  min-width: 480px;
-}
-
-.comment-button {
-  font-family: 'Poppins', sans-serif;
-  background-color: #f24444;
-  color: #fff;
-  justify-content: space-between;
-  margin: auto;
-  font-size: 12;
-  padding: 10px 8px;
-  border: none;
+  .comment-container {
+    justify-content: space-between;
+    max-width: 640px;
+    min-width: 480px;
+    margin: auto;
+    padding: 5px;
+  }
+  
+  .comment-menu-panel {
+    margin-left: auto;
+  }
+  
+  .comment-header-image {
+    background-size: cover;
+  }
+  
+  h2 {
+    padding: 20px 0px;
+  }
+  
+  .user {
+    padding: 20px 0px;
+  }
+  
+  .comment-section {
+    display: inline;
+    width: 100%;
+    max-width: 640px;
+    min-width: 480px;
+  }
+  
+  .comment-button {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f24444;
+    color: #fff;
+    justify-content: space-between;
+    margin: auto;
+    font-size: 12;
+    padding: 10px 8px;
+    border: none;
+  }
+  
+  .form-comment {
+    max-width: 640px;
+    min-width: 480px;
+    margin: auto;
+    padding: 20px;
+  }
 }
 
 .footer {

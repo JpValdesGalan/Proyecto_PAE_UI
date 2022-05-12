@@ -7,16 +7,15 @@
         </mat-card-title>
         <div class="user"><b>Posted by:</b> <p>{{postAuthor.username}}</p></div>
       </mat-card-header>
-      <img mat-card-image src="{{postImageURL}}" alt="Post image" class="post-body-image">
       <mat-card-content class="post-content">
+        <img mat-card-image src="{{postImageURL}}" alt="Post image" class="post-body-image">
       </mat-card-content>
     </mat-card>
 </section>
 
 <section id="comments">
-  <div class="padding"></div>
-  <div class="comment-container">
-    <mat-card *ngFor="let comment of comments">
+  <div class="comment-container" *ngFor="let comment of comments">
+    <mat-card>
       <mat-card-header (onCreate)="getCommentAuthor(comment.id_user)">
         <div mat-card-avatar class="comment-header-image">imagen</div>
         <mat-card-title>{{commentAuthor.username}}</mat-card-title>
@@ -48,12 +47,12 @@
         <p *ngIf="!wantsToEdit.includes(comment._id)">{{comment.message}}</p>
       </mat-card-content>
     </mat-card>
-    <form [formGroup]="form" (submit)="publishComment()">
-      <mat-form-field class="comment-section" appearance="fill" *ngIf="isLogged">
-        <textarea matInput formControlName ="message"></textarea>
-      </mat-form-field>
-      <button mat-raised-button class="comment-button" *ngIf="isLogged">Comentar</button>
-    </form>
   </div>
+  <form class="form-comment" [formGroup]="form" (submit)="publishComment()">
+    <mat-form-field class="comment-section" appearance="fill" *ngIf="isLogged">
+      <textarea matInput formControlName ="message" placeholder="Comenta"></textarea>
+    </mat-form-field>
+    <button mat-raised-button class="comment-button" *ngIf="isLogged">Comentar</button>
+  </form>
   <div class="footer"></div>
 </section>
