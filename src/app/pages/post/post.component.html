@@ -13,12 +13,12 @@
     </mat-card>
 </section>
 
-<section id="comments">
+<section id="comments" *ngIf="comments.length == authors.length">
   <div class="comment-container" *ngFor="let comment of comments; index as index">
     <mat-card>
       <mat-card-header>
         <div mat-card-avatar class="comment-header-image">
-          <img class="comment-header-image" src="">
+          <img class="comment-header-image" src="{{URL}}/images/{{authors[index].profile_picture}}">
         </div>
         <mat-card-title>{{authors[index].username}}</mat-card-title>
         <mat-card-subtitle  [ngStyle]="{'color': role.color}">{{role.name}}</mat-card-subtitle>

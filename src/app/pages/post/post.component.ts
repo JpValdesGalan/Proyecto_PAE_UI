@@ -84,6 +84,7 @@ export class PostComponent implements OnInit {
     this.socketClient.on('viewComments', (data: any) => {
       this.comments = data;
     });
+    this.URL = environment.BackendURL;
     this.idForum = this.route.snapshot.paramMap.get('id');
     this.isLogged = this.authService.isLoggedIn();
     this.postService.getPost(this.idForum).subscribe((result: Post) => {
