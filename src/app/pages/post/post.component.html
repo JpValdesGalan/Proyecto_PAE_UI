@@ -22,8 +22,9 @@
           </mat-menu>
         </div>
       </mat-card-header>
-      <mat-card-content class="post-content">
-        <form [formGroup]="formPost" (submit)="editPost(post._id)" *ngIf="wantsToEditPost">
+      <form [formGroup]="formPost" (submit)="editPost(post._id)" *ngIf="wantsToEditPost">
+        <img mat-card-image [src]="imgSrc" alt="Post image" class="post-body-image">
+        <mat-card-content class="edit-post-content">
           <div class="inputl">
             <mat-form-field appearance="fill">
               <mat-label for="titulo">Nuevo Titulo</mat-label>
@@ -36,8 +37,10 @@
           <div>
             <button>Guardar</button>
           </div>
-        </form>
-        <img mat-card-image src="{{postImageURL}}" alt="Post image" class="post-body-image" *ngIf="!wantsToEditPost">
+        </mat-card-content>
+      </form>
+      <mat-card-content class="post-content" *ngIf="!wantsToEditPost">
+        <img mat-card-image src="{{postImageURL}}" alt="Post image" class="post-body-image">
       </mat-card-content>
     </mat-card>
 </section>

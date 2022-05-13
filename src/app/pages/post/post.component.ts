@@ -82,7 +82,7 @@ export class PostComponent implements OnInit {
       message: ['', [Validators.required, Validators.maxLength(250)]]
     });
     this.formPost = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+      title: ['', [Validators.minLength(8), Validators.maxLength(100)]],
     });
     this.imgSrc = 'https://www.agora-gallery.com/advice/wp-content/uploads/2015/10/image-placeholder-300x200.png';
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
@@ -143,8 +143,8 @@ export class PostComponent implements OnInit {
 
   editPost(id: string) {
     if(this.formPost.valid){
-      this.formPost.value.id_author = this.decodedToken._id;
-      this.formPost.value.id_forum = this.idForum;
+      //this.formPost.value.id_author = this.decodedToken._id;
+      //this.formPost.value.id_forum = this.idForum;
       this.formPost.value.file = this.sendFile;
       this.postService.updatePost(id, this.formPost.value).subscribe(response => {
         if(!response.error) window.location.reload();

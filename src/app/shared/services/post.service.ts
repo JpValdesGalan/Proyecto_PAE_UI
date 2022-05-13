@@ -33,10 +33,10 @@ export class PostService {
 
   updatePost(id: string, upload: any): Observable<any>{
     let formData: FormData = new FormData();
-    formData.append("file", upload.file);
-    formData.append("id_author", upload.id_author);
-    formData.append("id_forum", upload.id_forum);
-    formData.append("title", upload.title);
+    if(upload.file) formData.append("file", upload.file);
+    //if(upload.id_author) formData.append("id_author", upload.id_author);
+    //if(upload.id_forum) formData.append("id_forum", upload.id_forum);
+    if(upload.title) formData.append("title", upload.title);
     const updateURL = environment.BackendURL + '/posts/' + id;
     return this.httpClient.put(updateURL, formData, {responseType: 'text'});
   }
