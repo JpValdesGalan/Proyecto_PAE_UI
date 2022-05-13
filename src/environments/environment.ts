@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://jsonplaceholder.typicode.com/',
-  BackendURL: 'http://localhost:3000',
+  BackendURL: 'https://the-forum-pae.herokuapp.com',
   googleId: '402060880190-hce6bc8gl31jgi9f8vava68h2ep0suf8.apps.googleusercontent.com'
 };
 
