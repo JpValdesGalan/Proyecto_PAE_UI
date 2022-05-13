@@ -31,6 +31,16 @@ export class PostService {
     return this.httpClient.delete(postURL);
   }
 
+  updatePost(id: string, upload: any): Observable<any>{
+    let formData: FormData = new FormData();
+    formData.append("file", upload.file);
+    formData.append("id_author", upload.id_author);
+    formData.append("id_forum", upload.id_forum);
+    formData.append("title", upload.title);
+    const updateURL = environment.BackendURL + '/posts/' + id;
+    return this.httpClient.put(updateURL, formData, {responseType: 'text'});
+  }
+
   getUserPosts(id: string): Observable <any> {
     const myPostURL = environment.BackendURL + '/posts/user/' + id;
     return this.httpClient.get(myPostURL);

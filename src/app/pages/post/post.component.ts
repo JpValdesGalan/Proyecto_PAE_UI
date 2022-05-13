@@ -55,6 +55,7 @@ export class PostComponent implements OnInit {
   };
 
   form: FormGroup;
+  formPost: FormGroup;
   comments: Comment[] = [];
   authors: User[] = [];
   created: boolean = false;
@@ -62,8 +63,10 @@ export class PostComponent implements OnInit {
   postImageURL: string = '';
   idForum: any;
   socketClient: any = null;
-  URL: string = '';
-  wantsToEdit: string[] = [];
+  sendFile: any;
+  imgSrc: string;
+  wantsToEditCmnt: string[] = [];
+  wantsToEditPost: boolean = false;
 
   constructor(private userService: UserService,
     private postService: PostService,
@@ -71,11 +74,16 @@ export class PostComponent implements OnInit {
     private commentsService: CommentsService,
     private roleService: RoleService,
     private formBuilder: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.form = this.formBuilder.group({
       message: ['', [Validators.required, Validators.maxLength(250)]]
     });
+    this.formPost = this.formBuilder.group({
+      title: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(100)]],
+    });
+    this.imgSrc = 'https://www.agora-gallery.com/advice/wp-content/uploads/2015/10/image-placeholder-300x200.png';
     this.decodedToken = this.getDecodedAccessToken(this.authService.get());
   }
 
@@ -124,6 +132,29 @@ export class PostComponent implements OnInit {
     });
   }
 
+  deletePost(id: string) {
+    this.postService.deletePost(id).subscribe(res => {
+      this.socketClient.emit('deletePost', id);
+    });
+    this.router.navigate(['/forum']);
+  }
+
+  editPost(id: string) {
+    if(this.formPost.valid){
+      this.formPost.value.id_author = this.decodedToken._id;
+      this.formPost.value.id_forum = this.idForum;
+      this.formPost.value.file = this.sendFile;
+      this.postService.updatePost(id, this.formPost.value).subscribe(response => {
+        if(!response.error) window.location.reload();
+        this.wantsToEditComment(id);
+      });
+    }
+  }
+
+  ownsPost(): boolean {
+    return this.postAuthor._id === this.decodedToken._id;
+  }
+
   publishComment() {
     if (this.form.valid) {
       this.form.value.id_user = this.decodedToken._id;
@@ -143,10 +174,10 @@ export class PostComponent implements OnInit {
   }
 
   wantsToEditComment(id: string) {
-    if (this.wantsToEdit.includes(id)) {
-      this.wantsToEdit.splice(this.wantsToEdit.indexOf(id), 1);
+    if (this.wantsToEditCmnt.includes(id)) {
+      this.wantsToEditCmnt.splice(this.wantsToEditCmnt.indexOf(id), 1);
     } else {
-      this.wantsToEdit.push(id);
+      this.wantsToEditCmnt.push(id);
     }
   }
 
@@ -156,6 +187,18 @@ export class PostComponent implements OnInit {
     });
     this.wantsToEditComment(id);
     window.location.reload();
+  }
+
+  onFileChange(event: any) {
+    let file = event.target.files[0];
+    const reader = new FileReader();
+    if (file) {
+      this.sendFile = file;
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.imgSrc = reader.result as string;
+      };
+    }
   }
 
   getDecodedAccessToken(token: string): any {

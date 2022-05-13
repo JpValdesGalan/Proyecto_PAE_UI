@@ -6,9 +6,38 @@
           <h2>{{post.title}}</h2>
         </mat-card-title>
         <div class="user"><b>Posted by:</b> <p>{{postAuthor.username}}</p></div>
+        <div class="post-menu-panel">
+          <button mat-icon-button [matMenuTriggerFor]="menu" *ngIf="ownsPost()">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="wantsToEditPost = !wantsToEditPost">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+            <button mat-menu-item (click)="deletePost(post._id)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+          </mat-menu>
+        </div>
       </mat-card-header>
       <mat-card-content class="post-content">
-        <img mat-card-image src="{{postImageURL}}" alt="Post image" class="post-body-image">
+        <form [formGroup]="formPost" (submit)="editPost(post._id)" *ngIf="wantsToEditPost">
+          <div class="inputl">
+            <mat-form-field appearance="fill">
+              <mat-label for="titulo">Nuevo Titulo</mat-label>
+              <input matInput type="text" name="titulo" placeholder="{{post.title}}" formControlName="title">
+            </mat-form-field>
+          </div>
+          <div class="inputr">
+            <input  type="file" [multiple]="false"accept="image/jpg, image/png, image/gif"  (change)="onFileChange($event);">
+          </div>
+          <div>
+            <button>Guardar</button>
+          </div>
+        </form>
+        <img mat-card-image src="{{postImageURL}}" alt="Post image" class="post-body-image" *ngIf="!wantsToEditPost">
       </mat-card-content>
     </mat-card>
 </section>
@@ -39,14 +68,14 @@
         </div>
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="form" (submit)="editComment(comment._id)" *ngIf="wantsToEdit.includes(comment._id)">
+        <form [formGroup]="form" (submit)="editComment(comment._id)" *ngIf="wantsToEditCmnt.includes(comment._id)">
           <mat-form-field class="comment-section" appearance="fill" *ngIf="isLogged">
             <mat-label>Nuevo comentario</mat-label>
             <textarea matInput formControlName="message" placeholder="{{comment.message}}">{{comment.message}}</textarea>
           </mat-form-field>
           <button mat-raised-button class="comment-button" *ngIf="isLogged">Guardar</button>
         </form>
-        <p *ngIf="!wantsToEdit.includes(comment._id)">{{comment.message}}</p>
+        <p *ngIf="!wantsToEditCmnt.includes(comment._id)">{{comment.message}}</p>
       </mat-card-content>
     </mat-card>
   </div>
