@@ -63,6 +63,7 @@ export class PostComponent implements OnInit {
   postImageURL: string = '';
   idForum: any;
   socketClient: any = null;
+  URL: string = '';
   sendFile: any;
   imgSrc: string;
   wantsToEditCmnt: string[] = [];
